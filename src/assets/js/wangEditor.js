@@ -7766,6 +7766,11 @@
             // 隐藏 toolbar
             setTimeout(hide)
           })
+
+          //二次开发：添加商品
+          $addGoods.click(function(e){
+            alert("TEST")
+          })
         }
 
         // 绑定drag事件
