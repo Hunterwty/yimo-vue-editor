@@ -7442,8 +7442,9 @@
         var $unLink = $(
           '<a href="#"><i class="wangeditor-menu-img-unlink"></i></a>'
         )
+        //二次开发
         var $addGoods = $(
-          '<a href="#"><i class="wangeditor-menu-img-credit-card"></i></a>'
+          '<a href="#" onclick="linkGoods(event)"><i class="wangeditor-menu-img-credit-card"></i></a>'
         )
 
         var $linkInputContainer = $('<div style="display:none;"></div>')
@@ -7765,11 +7766,6 @@
 
             // 隐藏 toolbar
             setTimeout(hide)
-          })
-
-          //二次开发：添加商品
-          $addGoods.click(function(e){
-            alert("TEST")
           })
         }
 
