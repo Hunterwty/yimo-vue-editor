@@ -7442,6 +7442,9 @@
         var $unLink = $(
           '<a href="#"><i class="wangeditor-menu-img-unlink"></i></a>'
         )
+        var $addGoods = $(
+          '<a href="#"><i class="wangeditor-menu-img-credit-card"></i></a>'
+        )
 
         var $linkInputContainer = $('<div style="display:none;"></div>')
         var $linkInput = $(
@@ -7541,6 +7544,7 @@
             .append($alignRight)
             .append($link)
             .append($unLink)
+            .append($addGoods)
 
           // 链接input放入container
           $linkInputContainer
