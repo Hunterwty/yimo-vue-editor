@@ -77,6 +77,7 @@ export default {
         return console.log('编辑器已初始化')
       }
       var editor = new E(this.editorId)
+      window.suEditor = editor
       //日志配置
       // E.config.printLog = false
       _this.editorConfig(editor)
