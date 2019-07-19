@@ -7775,7 +7775,13 @@
           //二次开发
           //取消链接商品
           $removeGoods.click(function (e) {
-            $currentImg.removeAttr("data-goodsid");
+            //取消链接
+            commandFn = function () {
+              $currentImg.removeAttr("data-goodsid");
+            }
+            customCommand(e, function () {
+              setTimeout(hide, 100)
+            })
           })
         }
 
