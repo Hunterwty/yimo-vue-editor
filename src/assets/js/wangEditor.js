@@ -7447,7 +7447,7 @@
           '<a href="#" onclick="linkGoods(event)"><i class="wangeditor-menu-img-credit-card"></i></a>'
         )
         var $removeGoods = $(
-          '<a href="#"><i class="wangeditor-menu-img-address-book"></i></a>'
+          '<a href="#"><i class="wangeditor-menu-img-drawer"></i></a>'
         )
 
         var $linkInputContainer = $('<div style="display:none;"></div>')
@@ -7873,7 +7873,7 @@
             $removeGoods.css("display", "none");
           }
           else {
-            $removeGoods.css("display", "block");
+            $removeGoods.css("display", "inline-block");
           }
           var imgPosition = $currentImg.position()
           var imgTop = imgPosition.top
