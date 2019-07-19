@@ -7872,6 +7872,9 @@
           if (!$currentImg.attr("data-goodsid")) {
             $removeGoods.css("display", "none");
           }
+          else {
+            $removeGoods.css("display", "block");
+          }
           var imgPosition = $currentImg.position()
           var imgTop = imgPosition.top
           var imgLeft = imgPosition.left
