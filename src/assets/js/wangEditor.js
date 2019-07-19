@@ -7550,7 +7550,6 @@
             .append($unLink)
             .append($addGoods)
             .append($removeGoods)
-          console.log($currentImg);
 
           // 链接input放入container
           $linkInputContainer
