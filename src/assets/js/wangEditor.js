@@ -7775,7 +7775,7 @@
           //二次开发
           //取消链接商品
           $removeGoods.click(function (e) {
-            $currentImg.removeAttr("data-goodsId");
+            $currentImg.removeAttr("data-goodsid");
           })
         }
 
