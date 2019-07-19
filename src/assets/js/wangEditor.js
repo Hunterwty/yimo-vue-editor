@@ -1,11 +1,11 @@
-;(function(factory) {
+; (function (factory) {
   if (typeof window.define === 'function') {
     if (window.define.amd) {
       // AMD模式
       window.define('wangEditor', ['jquery'], factory)
     } else if (window.define.cmd) {
       // CMD模式
-      window.define(function(require, exports, module) {
+      window.define(function (require, exports, module) {
         return factory
       })
     } else {
@@ -25,7 +25,7 @@
     // 全局模式
     factory(window.jQuery)
   }
-})(function($) {
+})(function ($) {
   // 验证是否引用jquery
   if (!$ || !$.fn || !$.fn.jquery) {
     alert('在引用wangEditor.js之前，先引用jQuery，否则无法使用 wangEditor')
@@ -33,7 +33,7 @@
   }
 
   // 编辑器（整体）构造函数
-  var E = function(elem) {
+  var E = function (elem) {
     // 支持 id 和 element 两种形式
     if (typeof elem === 'string') {
       elem = '#' + elem
@@ -76,7 +76,7 @@
   // 注册 plugin 事件，用于用户自定义插件
   // 用户在引用 wangEditor.js 之后，还可以通过 E.plugin() 注入自定义函数，
   // 该函数将会在 editor.create() 方法的最后一步执行
-  E.plugin = function(fn) {
+  E.plugin = function (fn) {
     if (!E._plugins) {
       E._plugins = []
     }
@@ -85,14 +85,14 @@
       E._plugins.push(fn)
     }
   }
-  initPlugins(function(fn) {
+  initPlugins(function (fn) {
     // 执行传入的函数
     fn(E, $)
   })
   function initPlugins(_e) {
     // editor 绑定事件
-    _e(function(E, $) {
-      E.fn.init = function() {
+    _e(function (E, $) {
+      E.fn.init = function () {
         // 初始化 editor 默认配置
         this.initDefaultConfig()
 
@@ -113,9 +113,9 @@
       }
     })
     // editor api
-    _e(function(E, $) {
+    _e(function (E, $) {
       // 预定义 ready 事件
-      E.fn.ready = function(fn) {
+      E.fn.ready = function (fn) {
         if (!this.readyFns) {
           this.readyFns = []
         }
@@ -124,7 +124,7 @@
       }
 
       // 处理ready事件
-      E.fn.readyHeadler = function() {
+      E.fn.readyHeadler = function () {
         var fns = this.readyFns
 
         while (fns.length) {
@@ -133,7 +133,7 @@
       }
 
       // 更新内容到 $valueContainer
-      E.fn.updateValue = function() {
+      E.fn.updateValue = function () {
         var editor = this
         var $valueContainer = editor.$valueContainer
         var $txt = editor.txt.$txt
@@ -148,7 +148,7 @@
       }
 
       // 获取初始化的内容
-      E.fn.getInitValue = function() {
+      E.fn.getInitValue = function () {
         var editor = this
         var $valueContainer = editor.$valueContainer
         var currentValue = ''
@@ -163,16 +163,16 @@
       }
 
       // 触发菜单updatestyle
-      E.fn.updateMenuStyle = function() {
+      E.fn.updateMenuStyle = function () {
         var menus = this.menus
 
-        $.each(menus, function(k, menu) {
+        $.each(menus, function (k, menu) {
           menu.updateSelected()
         })
       }
 
       // 除了传入的 menuIds，其他全部启用
-      E.fn.enableMenusExcept = function(menuIds) {
+      E.fn.enableMenusExcept = function (menuIds) {
         if (this._disabled) {
           // 编辑器处于禁用状态，则不执行改操作
           return
@@ -183,7 +183,7 @@
           menuIds = [menuIds]
         }
 
-        $.each(this.menus, function(k, menu) {
+        $.each(this.menus, function (k, menu) {
           if (menuIds.indexOf(k) >= 0) {
             return
           }
@@ -192,7 +192,7 @@
       }
 
       // 除了传入的 menuIds，其他全部禁用
-      E.fn.disableMenusExcept = function(menuIds) {
+      E.fn.disableMenusExcept = function (menuIds) {
         if (this._disabled) {
           // 编辑器处于禁用状态，则不执行改操作
           return
@@ -203,7 +203,7 @@
           menuIds = [menuIds]
         }
 
-        $.each(this.menus, function(k, menu) {
+        $.each(this.menus, function (k, menu) {
           if (menuIds.indexOf(k) >= 0) {
             return
           }
@@ -212,10 +212,10 @@
       }
 
       // 隐藏所有 dropPanel droplist modal
-      E.fn.hideDropPanelAndModal = function() {
+      E.fn.hideDropPanelAndModal = function () {
         var menus = this.menus
 
-        $.each(menus, function(k, menu) {
+        $.each(menus, function (k, menu) {
           var m = menu.dropPanel || menu.dropList || menu.modal
           if (m && m.hide) {
             m.hide()
@@ -224,13 +224,13 @@
       }
     })
     // selection range API
-    _e(function(E, $) {
+    _e(function (E, $) {
       // 用到 w3c range 的函数，如果检测到浏览器不支持 w3c range，则赋值为空函数
       var ieRange = !E.w3cRange
-      function emptyFn() {}
+      function emptyFn() { }
 
       // 设置或读取当前的range
-      E.fn.currentRange = function(cr) {
+      E.fn.currentRange = function (cr) {
         if (cr) {
           this._rangeData = cr
         } else {
@@ -239,7 +239,7 @@
       }
 
       // 将当前选区折叠
-      E.fn.collapseRange = function(range, opt) {
+      E.fn.collapseRange = function (range, opt) {
         // opt 参数说明：'start'-折叠到开始; 'end'-折叠到结束
         opt = opt || 'end'
         opt = opt === 'start' ? true : false
@@ -256,186 +256,186 @@
       // 获取选区的文字
       E.fn.getRangeText = ieRange
         ? emptyFn
-        : function(range) {
-            range = range || this.currentRange()
-            if (!range) {
-              return
-            }
-            return range.toString()
+        : function (range) {
+          range = range || this.currentRange()
+          if (!range) {
+            return
           }
+          return range.toString()
+        }
 
       // 获取选区对应的DOM对象
       E.fn.getRangeElem = ieRange
         ? emptyFn
-        : function(range) {
-            range = range || this.currentRange()
-            var dom = range.commonAncestorContainer
+        : function (range) {
+          range = range || this.currentRange()
+          var dom = range.commonAncestorContainer
 
-            if (dom.nodeType === 1) {
-              return dom
-            } else {
-              return dom.parentNode
-            }
+          if (dom.nodeType === 1) {
+            return dom
+          } else {
+            return dom.parentNode
           }
+        }
 
       // 选区内容是否为空？
       E.fn.isRangeEmpty = ieRange
         ? emptyFn
-        : function(range) {
-            range = range || this.currentRange()
+        : function (range) {
+          range = range || this.currentRange()
 
-            if (range && range.startContainer) {
-              if (range.startContainer === range.endContainer) {
-                if (range.startOffset === range.endOffset) {
-                  return true
-                }
+          if (range && range.startContainer) {
+            if (range.startContainer === range.endContainer) {
+              if (range.startOffset === range.endOffset) {
+                return true
               }
             }
-
-            return false
           }
+
+          return false
+        }
 
       // 保存选区数据
       E.fn.saveSelection = ieRange
         ? emptyFn
-        : function(range) {
-            var self = this,
-              _parentElem,
-              selection,
-              txt = self.txt.$txt.get(0)
+        : function (range) {
+          var self = this,
+            _parentElem,
+            selection,
+            txt = self.txt.$txt.get(0)
 
-            if (range) {
+          if (range) {
+            _parentElem = range.commonAncestorContainer
+          } else {
+            selection = document.getSelection()
+            if (selection.getRangeAt && selection.rangeCount) {
+              range = document.getSelection().getRangeAt(0)
               _parentElem = range.commonAncestorContainer
-            } else {
-              selection = document.getSelection()
-              if (selection.getRangeAt && selection.rangeCount) {
-                range = document.getSelection().getRangeAt(0)
-                _parentElem = range.commonAncestorContainer
-              }
-            }
-            // 确定父元素一定要包含在编辑器区域内
-            if (
-              _parentElem &&
-              ($.contains(txt, _parentElem) || txt === _parentElem)
-            ) {
-              // 保存选择区域
-              self.currentRange(range)
             }
           }
+          // 确定父元素一定要包含在编辑器区域内
+          if (
+            _parentElem &&
+            ($.contains(txt, _parentElem) || txt === _parentElem)
+          ) {
+            // 保存选择区域
+            self.currentRange(range)
+          }
+        }
 
       // 恢复选中区域
       E.fn.restoreSelection = ieRange
         ? emptyFn
-        : function(range) {
-            var selection
+        : function (range) {
+          var selection
 
-            range = range || this.currentRange()
+          range = range || this.currentRange()
 
-            if (!range) {
-              return
-            }
-
-            // 使用 try catch 来防止 IE 某些情况报错
-            try {
-              selection = document.getSelection()
-              selection.removeAllRanges()
-              selection.addRange(range)
-            } catch (ex) {
-              E.error(
-                '执行 editor.restoreSelection 时，IE可能会有异常，不影响使用'
-              )
-            }
+          if (!range) {
+            return
           }
+
+          // 使用 try catch 来防止 IE 某些情况报错
+          try {
+            selection = document.getSelection()
+            selection.removeAllRanges()
+            selection.addRange(range)
+          } catch (ex) {
+            E.error(
+              '执行 editor.restoreSelection 时，IE可能会有异常，不影响使用'
+            )
+          }
+        }
 
       // 根据elem恢复选区
       E.fn.restoreSelectionByElem = ieRange
         ? emptyFn
-        : function(elem, opt) {
-            // opt参数说明：'start'-折叠到开始，'end'-折叠到结束，'all'-全部选中
-            if (!elem) {
-              return
-            }
-            opt = opt || 'end' // 默认为折叠到结束
-
-            // 根据elem获取选区
-            this.setRangeByElem(elem)
-
-            // 根据 opt 折叠选区
-            if (opt === 'start') {
-              this.collapseRange(this.currentRange(), 'start')
-            }
-            if (opt === 'end') {
-              this.collapseRange(this.currentRange(), 'end')
-            }
-
-            // 恢复选区
-            this.restoreSelection()
+        : function (elem, opt) {
+          // opt参数说明：'start'-折叠到开始，'end'-折叠到结束，'all'-全部选中
+          if (!elem) {
+            return
           }
+          opt = opt || 'end' // 默认为折叠到结束
+
+          // 根据elem获取选区
+          this.setRangeByElem(elem)
+
+          // 根据 opt 折叠选区
+          if (opt === 'start') {
+            this.collapseRange(this.currentRange(), 'start')
+          }
+          if (opt === 'end') {
+            this.collapseRange(this.currentRange(), 'end')
+          }
+
+          // 恢复选区
+          this.restoreSelection()
+        }
 
       // 初始化选区
       E.fn.initSelection = ieRange
         ? emptyFn
-        : function() {
-            var editor = this
-            if (editor.currentRange()) {
-              //如果currentRange有值，则不用再初始化
-              return
-            }
-
-            var range
-            var $txt = editor.txt.$txt
-            var $firstChild = $txt.children().first()
-
-            if ($firstChild.length) {
-              editor.restoreSelectionByElem($firstChild.get(0))
-            }
+        : function () {
+          var editor = this
+          if (editor.currentRange()) {
+            //如果currentRange有值，则不用再初始化
+            return
           }
+
+          var range
+          var $txt = editor.txt.$txt
+          var $firstChild = $txt.children().first()
+
+          if ($firstChild.length) {
+            editor.restoreSelectionByElem($firstChild.get(0))
+          }
+        }
 
       // 根据元素创建选区
       E.fn.setRangeByElem = ieRange
         ? emptyFn
-        : function(elem) {
-            var editor = this
-            var txtElem = editor.txt.$txt.get(0)
-            if (!elem || !$.contains(txtElem, elem)) {
-              return
-            }
-
-            // 找到elem的第一个 textNode 和 最后一个 textNode
-            var firstTextNode = elem.firstChild
-            while (firstTextNode) {
-              if (firstTextNode.nodeType === 3) {
-                break
-              }
-              // 继续向下
-              firstTextNode = firstTextNode.firstChild
-            }
-            var lastTextNode = elem.lastChild
-            while (lastTextNode) {
-              if (lastTextNode.nodeType === 3) {
-                break
-              }
-              // 继续向下
-              lastTextNode = lastTextNode.lastChild
-            }
-
-            var range = document.createRange()
-            if (firstTextNode && lastTextNode) {
-              // 说明 elem 有内容，能取到子元素
-              range.setStart(firstTextNode, 0)
-              range.setEnd(lastTextNode, lastTextNode.textContent.length)
-            } else {
-              // 说明 elem 无内容
-              range.setStart(elem, 0)
-              range.setEnd(elem, 0)
-            }
-
-            // 保存选区
-            editor.saveSelection(range)
+        : function (elem) {
+          var editor = this
+          var txtElem = editor.txt.$txt.get(0)
+          if (!elem || !$.contains(txtElem, elem)) {
+            return
           }
+
+          // 找到elem的第一个 textNode 和 最后一个 textNode
+          var firstTextNode = elem.firstChild
+          while (firstTextNode) {
+            if (firstTextNode.nodeType === 3) {
+              break
+            }
+            // 继续向下
+            firstTextNode = firstTextNode.firstChild
+          }
+          var lastTextNode = elem.lastChild
+          while (lastTextNode) {
+            if (lastTextNode.nodeType === 3) {
+              break
+            }
+            // 继续向下
+            lastTextNode = lastTextNode.lastChild
+          }
+
+          var range = document.createRange()
+          if (firstTextNode && lastTextNode) {
+            // 说明 elem 有内容，能取到子元素
+            range.setStart(firstTextNode, 0)
+            range.setEnd(lastTextNode, lastTextNode.textContent.length)
+          } else {
+            // 说明 elem 无内容
+            range.setStart(elem, 0)
+            range.setEnd(elem, 0)
+          }
+
+          // 保存选区
+          editor.saveSelection(range)
+        }
     })
     // selection range API - IE8及以下
-    _e(function(E, $) {
+    _e(function (E, $) {
       if (E.w3cRange) {
         // 说明支持 W3C 的range方法
         return
@@ -444,7 +444,7 @@
       // -----------------IE8时，需要重写以下方法-------------------
 
       // 获取选区的文字
-      E.fn.getRangeText = function(range) {
+      E.fn.getRangeText = function (range) {
         range = range || this.currentRange()
         if (!range) {
           return
@@ -453,7 +453,7 @@
       }
 
       // 获取选区对应的DOM对象
-      E.fn.getRangeElem = function(range) {
+      E.fn.getRangeElem = function (range) {
         range = range || this.currentRange()
         if (!range) {
           return
@@ -468,7 +468,7 @@
       }
 
       // 选区内容是否为空？
-      E.fn.isRangeEmpty = function(range) {
+      E.fn.isRangeEmpty = function (range) {
         range = range || this.currentRange()
 
         if (range && range.text) {
@@ -479,7 +479,7 @@
       }
 
       // 保存选区数据
-      E.fn.saveSelection = function(range) {
+      E.fn.saveSelection = function (range) {
         var self = this,
           _parentElem,
           selection,
@@ -509,7 +509,7 @@
       }
 
       // 恢复选中区域
-      E.fn.restoreSelection = function(currentRange) {
+      E.fn.restoreSelection = function (currentRange) {
         var editor = this,
           selection,
           range
@@ -523,13 +523,13 @@
         try {
           // 此处，plupload上传上传图片时，IE8-会报一个『参数无效』的错误
           range.setEndPoint('EndToEnd', currentRange)
-        } catch (ex) {}
+        } catch (ex) { }
 
         if (currentRange.text.length === 0) {
           try {
             // IE8 插入表情会报错
             range.collapse(false)
-          } catch (ex) {}
+          } catch (ex) { }
         } else {
           range.setEndPoint('StartToStart', currentRange)
         }
@@ -537,13 +537,13 @@
       }
     })
     // editor command hooks
-    _e(function(E, $) {
-      E.fn.commandHooks = function() {
+    _e(function (E, $) {
+      E.fn.commandHooks = function () {
         var editor = this
         var commandHooks = {}
 
         // insertHtml
-        commandHooks.insertHtml = function(html) {
+        commandHooks.insertHtml = function (html) {
           var $elem = $(html)
           var rangeElem = editor.getRangeElem()
           var targetElem
@@ -561,9 +561,9 @@
       }
     })
     // editor command API
-    _e(function(E, $) {
+    _e(function (E, $) {
       // 基本命令
-      E.fn.command = function(e, commandName, commandValue, callback) {
+      E.fn.command = function (e, commandName, commandValue, callback) {
         var editor = this
         var hooks
 
@@ -587,7 +587,7 @@
       }
 
       // 针对一个elem对象执行基础命令
-      E.fn.commandForElem = function(
+      E.fn.commandForElem = function (
         elemOpt,
         e,
         commandName,
@@ -618,7 +618,7 @@
       }
 
       // 自定义命令
-      E.fn.customCommand = function(e, commandFn, callback) {
+      E.fn.customCommand = function (e, commandFn, callback) {
         var editor = this
         var range = editor.currentRange()
 
@@ -671,35 +671,35 @@
 
       // 封装 document.queryCommandValue 函数
       // IE8 直接执行偶尔会报错，因此直接用 try catch 封装一下
-      E.fn.queryCommandValue = function(commandName) {
+      E.fn.queryCommandValue = function (commandName) {
         var result = ''
         try {
           result = document.queryCommandValue(commandName)
-        } catch (ex) {}
+        } catch (ex) { }
         return result
       }
 
       // 封装 document.queryCommandState 函数
       // IE8 直接执行偶尔会报错，因此直接用 try catch 封装一下
-      E.fn.queryCommandState = function(commandName) {
+      E.fn.queryCommandState = function (commandName) {
         var result = false
         try {
           result = document.queryCommandState(commandName)
-        } catch (ex) {}
+        } catch (ex) { }
         return result
       }
 
       // 封装 document.queryCommandSupported 函数
-      E.fn.queryCommandSupported = function(commandName) {
+      E.fn.queryCommandSupported = function (commandName) {
         var result = false
         try {
           result = document.queryCommandSupported(commandName)
-        } catch (ex) {}
+        } catch (ex) { }
         return result
       }
     })
     // dom selector
-    _e(function(E, $) {
+    _e(function (E, $) {
       var matchesSelector
 
       // matchesSelector hook
@@ -709,7 +709,7 @@
         var result = false
 
         // 用jquery查找 selector 所有对象，如果其中有一个和传入 elem 相同，则证明 elem 符合 selector
-        $elems.each(function() {
+        $elems.each(function () {
           if (this === elem) {
             result = true
             return false
@@ -720,7 +720,7 @@
       }
 
       // 从当前的elem，往上去查找合法标签 如 p head table blockquote ul ol 等
-      E.fn.getLegalTags = function(elem) {
+      E.fn.getLegalTags = function (elem) {
         var legalTags = this.config.legalTags
         if (!legalTags) {
           E.error('配置项中缺少 legalTags 的配置')
@@ -730,7 +730,7 @@
       }
 
       // 根据条件，查询自身或者父元素，符合即返回
-      E.fn.getSelfOrParentByName = function(elem, selector, check) {
+      E.fn.getSelfOrParentByName = function (elem, selector, check) {
         if (!elem || !selector) {
           return
         }
@@ -773,7 +773,7 @@
       }
     })
     // undo redo
-    _e(function(E, $) {
+    _e(function (E, $) {
       var length = 20 // 缓存的最大长度
       function _getRedoList(editor) {
         if (editor._redoList == null) {
@@ -830,7 +830,7 @@
       }
 
       // 记录
-      E.fn.undoRecord = function() {
+      E.fn.undoRecord = function () {
         var editor = this
         var $txt = editor.txt.$txt
         var val = $txt.html()
@@ -860,7 +860,7 @@
       }
 
       // undo 操作
-      E.fn.undo = function() {
+      E.fn.undo = function () {
         var editor = this
         var undoList = _getUndoList(editor)
         var redoList = _getRedoList(editor)
@@ -878,7 +878,7 @@
       }
 
       // redo 操作
-      E.fn.redo = function() {
+      E.fn.redo = function () {
         var editor = this
         var undoList = _getUndoList(editor)
         var redoList = _getRedoList(editor)
@@ -895,9 +895,9 @@
       }
     })
     // 暴露给用户的 API
-    _e(function(E, $) {
+    _e(function (E, $) {
       // 创建编辑器
-      E.fn.create = function() {
+      E.fn.create = function () {
         var editor = this
         // 检查 E.$body 是否有值
         // 如果在 body 之前引用了 js 文件，body 尚未加载，可能没有值
@@ -936,14 +936,14 @@
         // 执行用户自定义事件，通过 E.ready() 添加
         var _plugins = E._plugins
         if (_plugins && _plugins.length) {
-          $.each(_plugins, function(k, val) {
+          $.each(_plugins, function (k, val) {
             val.call(editor)
           })
         }
       }
 
       // 禁用编辑器
-      E.fn.disable = function() {
+      E.fn.disable = function () {
         this.txt.$txt.removeAttr('contenteditable')
         this.disableMenusExcept()
 
@@ -951,7 +951,7 @@
         this._disabled = true
       }
       // 启用编辑器
-      E.fn.enable = function() {
+      E.fn.enable = function () {
         // 先解除状态记录，再启用
         this._disabled = false
         this.txt.$txt.attr('contenteditable', 'true')
@@ -959,7 +959,7 @@
       }
 
       // 销毁编辑器
-      E.fn.destroy = function() {
+      E.fn.destroy = function () {
         var self = this
         var $valueContainer = self.$valueContainer
         var $editorContainer = self.$editorContainer
@@ -978,7 +978,7 @@
       }
 
       // 撤销 销毁编辑器
-      E.fn.undestroy = function() {
+      E.fn.undestroy = function () {
         var self = this
         var $valueContainer = self.$valueContainer
         var $editorContainer = self.$editorContainer
@@ -998,7 +998,7 @@
       }
 
       // 清空内容的快捷方式
-      E.fn.clear = function() {
+      E.fn.clear = function () {
         var editor = this
         var $txt = editor.txt.$txt
         $txt.html('<p><br></p>')
@@ -1006,9 +1006,9 @@
       }
     })
     // menuContainer 构造函数
-    _e(function(E, $) {
+    _e(function (E, $) {
       // 定义构造函数
-      var MenuContainer = function(editor) {
+      var MenuContainer = function (editor) {
         this.editor = editor
         this.init()
       }
@@ -1019,11 +1019,11 @@
       E.MenuContainer = MenuContainer
     })
     // MenuContainer.fn bind fn
-    _e(function(E, $) {
+    _e(function (E, $) {
       var MenuContainer = E.MenuContainer
 
       // 初始化
-      MenuContainer.fn.init = function() {
+      MenuContainer.fn.init = function () {
         var self = this
         var $menuContainer = $(
           '<div class="wangEditor-menu-container clearfix"></div>'
@@ -1036,12 +1036,12 @@
       }
 
       // 编辑区域滚动时，增加shadow
-      MenuContainer.fn.changeShadow = function() {
+      MenuContainer.fn.changeShadow = function () {
         var $menuContainer = this.$menuContainer
         var editor = this.editor
         var $txt = editor.txt.$txt
 
-        $txt.on('scroll', function() {
+        $txt.on('scroll', function () {
           if ($txt.scrollTop() > 10) {
             $menuContainer.addClass('wangEditor-menu-shadow')
           } else {
@@ -1051,10 +1051,10 @@
       }
     })
     // MenuContainer.fn API
-    _e(function(E, $) {
+    _e(function (E, $) {
       var MenuContainer = E.MenuContainer
 
-      MenuContainer.fn.render = function() {
+      MenuContainer.fn.render = function () {
         var $menuContainer = this.$menuContainer
         var $editorContainer = this.editor.$editorContainer
 
@@ -1062,19 +1062,19 @@
       }
 
       // 获取菜单栏的高度
-      MenuContainer.fn.height = function() {
+      MenuContainer.fn.height = function () {
         var $menuContainer = this.$menuContainer
         return $menuContainer.height()
       }
 
       // 添加菜单
-      MenuContainer.fn.appendMenu = function(groupIdx, menu) {
+      MenuContainer.fn.appendMenu = function (groupIdx, menu) {
         // 判断是否需要新增一个菜单组
         this._addGroup(groupIdx)
         // 增加菜单（返回 $menuItem）
         return this._addOneMenu(menu)
       }
-      MenuContainer.fn._addGroup = function(groupIdx) {
+      MenuContainer.fn._addGroup = function (groupIdx) {
         var $menuContainer = this.$menuContainer
         var $menuGroup
         if (!this.$currentGroup || this.currentGroupIdx !== groupIdx) {
@@ -1085,7 +1085,7 @@
           this.currentGroupIdx = groupIdx
         }
       }
-      MenuContainer.fn._addOneMenu = function(menu) {
+      MenuContainer.fn._addOneMenu = function (menu) {
         var $menuNormal = menu.$domNormal
         var $menuSelected = menu.$domSelected
 
@@ -1099,9 +1099,9 @@
       }
     })
     // menu 构造函数
-    _e(function(E, $) {
+    _e(function (E, $) {
       // 定义构造函数
-      var Menu = function(opt) {
+      var Menu = function (opt) {
         this.editor = opt.editor
         this.id = opt.id
         this.title = opt.title
@@ -1121,11 +1121,11 @@
       E.Menu = Menu
     })
     // Menu.fn 初始化绑定的事件
-    _e(function(E, $) {
+    _e(function (E, $) {
       var Menu = E.Menu
 
       // 初始化UI
-      Menu.fn.initUI = function() {
+      Menu.fn.initUI = function () {
         var editor = this.editor
         var uiConfig = editor.UI.menus
         var menuId = this.id
@@ -1162,11 +1162,11 @@
       }
     })
     // Menu.fn API
-    _e(function(E, $) {
+    _e(function (E, $) {
       var Menu = E.Menu
 
       // 渲染菜单
-      Menu.fn.render = function(groupIdx) {
+      Menu.fn.render = function (groupIdx) {
         // 渲染UI
         this.initUI()
 
@@ -1183,7 +1183,7 @@
           onRender.call(this)
         }
       }
-      Menu.fn._renderTip = function($menuItem) {
+      Menu.fn._renderTip = function ($menuItem) {
         var self = this
         var editor = self.editor
         var title = self.title
@@ -1197,12 +1197,12 @@
           // 内容赋值为 title ，为了计算tip宽度
           $tempDiv = $(
             '<p style="opacity:0; filter:Alpha(opacity=0); position:absolute;top:-10000px;">' +
-              title +
-              '</p>'
+            title +
+            '</p>'
           )
           // 先添加到body，计算完再 remove
           E.$body.append($tempDiv)
-          editor.ready(function() {
+          editor.ready(function () {
             var editor = this
             var titleWidth = $tempDiv.outerWidth() + 5 // 多出 5px 的冗余
             var currentWidth = $tip.outerWidth()
@@ -1236,12 +1236,12 @@
         var timeoutId
         $menuItem
           .find('a')
-          .on('mouseenter', function(e) {
+          .on('mouseenter', function (e) {
             if (!self.active() && !self.disabled()) {
               timeoutId = setTimeout(show, 200)
             }
           })
-          .on('mouseleave', function(e) {
+          .on('mouseleave', function (e) {
             timeoutId && clearTimeout(timeoutId)
             hide()
           })
@@ -1249,7 +1249,7 @@
       }
 
       // 绑定事件
-      Menu.fn.bindEvent = function() {
+      Menu.fn.bindEvent = function () {
         var self = this
 
         var $domNormal = self.$domNormal
@@ -1258,7 +1258,7 @@
         // 试图获取该菜单定义的事件（未selected），没有则自己定义
         var clickEvent = self.clickEvent
         if (!clickEvent) {
-          clickEvent = function(e) {
+          clickEvent = function (e) {
             // -----------dropPanel dropList modal-----------
             var dropObj = self.dropPanel || self.dropList || self.modal
             if (dropObj && dropObj.show) {
@@ -1298,14 +1298,14 @@
         var clickEventSelected = self.clickEventSelected || clickEvent
 
         // 将事件绑定到菜单dom上
-        $domNormal.click(function(e) {
+        $domNormal.click(function (e) {
           if (!self.disabled()) {
             clickEvent.call(self, e)
             self.updateSelected()
           }
           e.preventDefault()
         })
-        $domSelected.click(function(e) {
+        $domSelected.click(function (e) {
           if (!self.disabled()) {
             clickEventSelected.call(self, e)
             self.updateSelected()
@@ -1315,7 +1315,7 @@
       }
 
       // 更新选中状态
-      Menu.fn.updateSelected = function() {
+      Menu.fn.updateSelected = function () {
         var self = this
         var editor = self.editor
 
@@ -1323,7 +1323,7 @@
         var updateSelectedEvent = self.updateSelectedEvent
         if (!updateSelectedEvent) {
           // 用户未自定义，则设置默认值
-          updateSelectedEvent = function() {
+          updateSelectedEvent = function () {
             var self = this
             var editor = self.editor
             var commandName = self.commandName
@@ -1353,7 +1353,7 @@
       }
 
       // 切换选中状态、显示效果
-      Menu.fn.changeSelectedState = function(state) {
+      Menu.fn.changeSelectedState = function (state) {
         var self = this
         var selected = self.selected
 
@@ -1379,13 +1379,13 @@
       }
 
       // 点击菜单，显示了 dropPanel modal 时，菜单的状态
-      Menu.fn.active = function(active) {
+      Menu.fn.active = function (active) {
         if (active == null) {
           return this._activeState
         }
         this._activeState = active
       }
-      Menu.fn.activeStyle = function(active) {
+      Menu.fn.activeStyle = function (active) {
         var selected = this.selected
         var $dom = this.$domNormal
         var $domSelected = this.$domSelected
@@ -1403,7 +1403,7 @@
       }
 
       // 菜单的启用和禁用
-      Menu.fn.disabled = function(opt) {
+      Menu.fn.disabled = function (opt) {
         // 参数为空，取值
         if (opt == null) {
           return !!this._disabled
@@ -1431,9 +1431,9 @@
       }
     })
     // dropList 构造函数
-    _e(function(E, $) {
+    _e(function (E, $) {
       // 定义构造函数
-      var DropList = function(editor, menu, opt) {
+      var DropList = function (editor, menu, opt) {
         this.editor = editor
         this.menu = menu
 
@@ -1458,11 +1458,11 @@
       E.DropList = DropList
     })
     // dropList fn bind
-    _e(function(E, $) {
+    _e(function (E, $) {
       var DropList = E.DropList
 
       // init
-      DropList.fn.init = function() {
+      DropList.fn.init = function () {
         var self = this
 
         // 生成dom对象
@@ -1476,7 +1476,7 @@
       }
 
       // 初始化dom结构
-      DropList.fn.initDOM = function() {
+      DropList.fn.initDOM = function () {
         var self = this
         var data = self.data
         var tpl = self.tpl || '<span>{#title}</span>'
@@ -1484,7 +1484,7 @@
 
         var itemContent
         var $item
-        $.each(data, function(commandValue, title) {
+        $.each(data, function (commandValue, title) {
           itemContent = tpl
             .replace(/{#commandValue}/gi, commandValue)
             .replace(/{#title}/gi, title)
@@ -1497,7 +1497,7 @@
       }
 
       // 绑定事件
-      DropList.fn.bindEvent = function() {
+      DropList.fn.bindEvent = function () {
         var self = this
         var editor = self.editor
         var menu = self.menu
@@ -1509,7 +1509,7 @@
         var beforeEvent = self.beforeEvent
         var afterEvent = self.afterEvent
 
-        $list.on('click', 'a[commandValue]', function(e) {
+        $list.on('click', 'a[commandValue]', function (e) {
           // 正式命令执行之前
           if (beforeEvent && typeof beforeEvent === 'function') {
             beforeEvent.call(e)
@@ -1542,13 +1542,13 @@
       }
 
       // 点击其他地方，立即隐藏 droplist
-      DropList.fn.initHideEvent = function() {
+      DropList.fn.initHideEvent = function () {
         var self = this
 
         // 获取 list elem
         var thisList = self.$list.get(0)
 
-        E.$body.on('click', function(e) {
+        E.$body.on('click', function (e) {
           if (!self.isShowing) {
             return
           }
@@ -1577,21 +1577,21 @@
           self.hide()
         })
 
-        E.$window.scroll(function() {
+        E.$window.scroll(function () {
           self.hide()
         })
 
-        E.$window.on('resize', function() {
+        E.$window.on('resize', function () {
           self.hide()
         })
       }
     })
     // dropListfn api
-    _e(function(E, $) {
+    _e(function (E, $) {
       var DropList = E.DropList
 
       // 渲染
-      DropList.fn._render = function() {
+      DropList.fn._render = function () {
         var self = this
         var editor = self.editor
         var $list = self.$list
@@ -1604,7 +1604,7 @@
       }
 
       // 定位
-      DropList.fn._position = function() {
+      DropList.fn._position = function () {
         var self = this
         var $list = self.$list
         var editor = self.editor
@@ -1663,7 +1663,7 @@
       }
 
       // 显示
-      DropList.fn.show = function() {
+      DropList.fn.show = function () {
         var self = this
         var menu = self.menu
         if (!self.rendered) {
@@ -1689,7 +1689,7 @@
       }
 
       // 隐藏
-      DropList.fn.hide = function() {
+      DropList.fn.hide = function () {
         var self = this
         var menu = self.menu
         if (!self.isShowing) {
@@ -1707,9 +1707,9 @@
       }
     })
     // dropPanel 构造函数
-    _e(function(E, $) {
+    _e(function (E, $) {
       // 定义构造函数
-      var DropPanel = function(editor, menu, opt) {
+      var DropPanel = function (editor, menu, opt) {
         this.editor = editor
         this.menu = menu
         this.$content = opt.$content
@@ -1727,11 +1727,11 @@
       E.DropPanel = DropPanel
     })
     // dropPanel fn bind
-    _e(function(E, $) {
+    _e(function (E, $) {
       var DropPanel = E.DropPanel
 
       // init
-      DropPanel.fn.init = function() {
+      DropPanel.fn.init = function () {
         var self = this
 
         // 生成dom对象
@@ -1742,7 +1742,7 @@
       }
 
       // init DOM
-      DropPanel.fn.initDOM = function() {
+      DropPanel.fn.initDOM = function () {
         var self = this
         var $content = self.$content
         var width = self.width
@@ -1763,13 +1763,13 @@
       }
 
       // 点击其他地方，立即隐藏 dropPanel
-      DropPanel.fn.initHideEvent = function() {
+      DropPanel.fn.initHideEvent = function () {
         var self = this
 
         // 获取 panel elem
         var thisPanle = self.$panel.get(0)
 
-        E.$body.on('click', function(e) {
+        E.$body.on('click', function (e) {
           if (!self.isShowing) {
             return
           }
@@ -1798,21 +1798,21 @@
           self.hide()
         })
 
-        E.$window.scroll(function(e) {
+        E.$window.scroll(function (e) {
           self.hide()
         })
 
-        E.$window.on('resize', function() {
+        E.$window.on('resize', function () {
           self.hide()
         })
       }
     })
     // dropPanel fn api
-    _e(function(E, $) {
+    _e(function (E, $) {
       var DropPanel = E.DropPanel
 
       // 渲染
-      DropPanel.fn._render = function() {
+      DropPanel.fn._render = function () {
         var self = this
         var onRender = self.onRender
         var editor = self.editor
@@ -1829,7 +1829,7 @@
       }
 
       // 定位
-      DropPanel.fn._position = function() {
+      DropPanel.fn._position = function () {
         var self = this
         var $panel = self.$panel
         var $triangle = self.$triangle
@@ -1901,10 +1901,10 @@
       }
 
       // focus 第一个 input
-      DropPanel.fn.focusFirstInput = function() {
+      DropPanel.fn.focusFirstInput = function () {
         var self = this
         var $panel = self.$panel
-        $panel.find('input[type=text],textarea').each(function() {
+        $panel.find('input[type=text],textarea').each(function () {
           var $input = $(this)
           if ($input.attr('disabled') == null) {
             $input.focus()
@@ -1914,7 +1914,7 @@
       }
 
       // 显示
-      DropPanel.fn.show = function() {
+      DropPanel.fn.show = function () {
         var self = this
         var menu = self.menu
         if (!self.rendered) {
@@ -1948,7 +1948,7 @@
       }
 
       // 隐藏
-      DropPanel.fn.hide = function() {
+      DropPanel.fn.hide = function () {
         var self = this
         var menu = self.menu
         if (!self.isShowing) {
@@ -1966,9 +1966,9 @@
       }
     })
     // modal 构造函数
-    _e(function(E, $) {
+    _e(function (E, $) {
       // 定义构造函数
-      var Modal = function(editor, menu, opt) {
+      var Modal = function (editor, menu, opt) {
         this.editor = editor
         this.menu = menu
         this.$content = opt.$content
@@ -1982,10 +1982,10 @@
       E.Modal = Modal
     })
     // modal fn bind
-    _e(function(E, $) {
+    _e(function (E, $) {
       var Modal = E.Modal
 
-      Modal.fn.init = function() {
+      Modal.fn.init = function () {
         var self = this
 
         // 初始化dom
@@ -1996,7 +1996,7 @@
       }
 
       // 初始化dom
-      Modal.fn.initDom = function() {
+      Modal.fn.initDom = function () {
         var self = this
         var $content = self.$content
         var $modal = $('<div class="wangEditor-modal"></div>')
@@ -2013,18 +2013,18 @@
       }
 
       // 初始化隐藏事件
-      Modal.fn.initHideEvent = function() {
+      Modal.fn.initHideEvent = function () {
         var self = this
         var $close = self.$close
         var modal = self.$modal.get(0)
 
         // 点击 $close 按钮，隐藏
-        $close.click(function() {
+        $close.click(function () {
           self.hide()
         })
 
         // 点击其他部分，隐藏
-        E.$body.on('click', function(e) {
+        E.$body.on('click', function (e) {
           if (!self.isShowing) {
             return
           }
@@ -2057,11 +2057,11 @@
       }
     })
     // modal fn api
-    _e(function(E, $) {
+    _e(function (E, $) {
       var Modal = E.Modal
 
       // 渲染
-      Modal.fn._render = function() {
+      Modal.fn._render = function () {
         var self = this
         var editor = self.editor
         var $modal = self.$modal
@@ -2077,7 +2077,7 @@
       }
 
       // 定位
-      Modal.fn._position = function() {
+      Modal.fn._position = function () {
         var self = this
         var $modal = self.$modal
         var top = $modal.offset().top
@@ -2099,7 +2099,7 @@
       }
 
       // 显示
-      Modal.fn.show = function() {
+      Modal.fn.show = function () {
         var self = this
         var menu = self.menu
         if (!self.rendered) {
@@ -2124,7 +2124,7 @@
       }
 
       // 隐藏
-      Modal.fn.hide = function() {
+      Modal.fn.hide = function () {
         var self = this
         var menu = self.menu
         if (!self.isShowing) {
@@ -2142,9 +2142,9 @@
       }
     })
     // txt 构造函数
-    _e(function(E, $) {
+    _e(function (E, $) {
       // 定义构造函数
-      var Txt = function(editor) {
+      var Txt = function (editor) {
         this.editor = editor
 
         // 初始化
@@ -2157,11 +2157,11 @@
       E.Txt = Txt
     })
     // Txt.fn bind fn
-    _e(function(E, $) {
+    _e(function (E, $) {
       var Txt = E.Txt
 
       // 初始化
-      Txt.fn.init = function() {
+      Txt.fn.init = function () {
         var self = this
         var editor = self.editor
         var $valueContainer = editor.$valueContainer
@@ -2177,13 +2177,13 @@
           // 如果不是div（是textarea），则创建一个div
           $txt = $(
             '<div class="wangEditor-txt" contentEditable="true">' +
-              currentValue +
-              '</div>'
+            currentValue +
+            '</div>'
           )
         }
 
         // 试图最后插入一个空行，ready之后才行
-        editor.ready(function() {
+        editor.ready(function () {
           self.insertEmptyP()
         })
 
@@ -2212,13 +2212,13 @@
       }
 
       // 删除时，如果没有内容了，就添加一个 <p><br></p>
-      Txt.fn.contentEmptyHandle = function() {
+      Txt.fn.contentEmptyHandle = function () {
         var self = this
         var editor = self.editor
         var $txt = self.$txt
         var $p
 
-        $txt.on('keydown', function(e) {
+        $txt.on('keydown', function (e) {
           if (e.keyCode !== 8) {
             return
           }
@@ -2230,7 +2230,7 @@
           }
         })
 
-        $txt.on('keyup', function(e) {
+        $txt.on('keyup', function (e) {
           if (e.keyCode !== 8) {
             return
           }
@@ -2247,7 +2247,7 @@
       }
 
       // enter时，不能使用 div 换行
-      Txt.fn.bindEnterForDiv = function() {
+      Txt.fn.bindEnterForDiv = function () {
         var tags = E.config.legalTags // 配置中编辑器要求的合法标签，如 p head table blockquote ul ol 等
         var self = this
         var editor = self.editor
@@ -2264,7 +2264,7 @@
           $keydownDivElem.remove()
         }
 
-        $txt.on('keydown keyup', function(e) {
+        $txt.on('keydown keyup', function (e) {
           if (e.keyCode !== 13) {
             return
           }
@@ -2302,16 +2302,16 @@
       }
 
       // enter时，用 p 包裹 text
-      Txt.fn.bindEnterForText = function() {
+      Txt.fn.bindEnterForText = function () {
         var self = this
         var $txt = self.$txt
         var handle
-        $txt.on('keyup', function(e) {
+        $txt.on('keyup', function (e) {
           if (e.keyCode !== 13) {
             return
           }
           if (!handle) {
-            handle = function() {
+            handle = function () {
               self.wrapImgAndText()
             }
           }
@@ -2320,12 +2320,12 @@
       }
 
       // tab 时，插入4个空格
-      Txt.fn.bindTabEvent = function() {
+      Txt.fn.bindTabEvent = function () {
         var self = this
         var editor = self.editor
         var $txt = self.$txt
 
-        $txt.on('keydown', function(e) {
+        $txt.on('keydown', function (e) {
           if (e.keyCode !== 9) {
             // 只监听 tab 按钮
             return
@@ -2338,7 +2338,7 @@
       }
 
       // 处理粘贴内容
-      Txt.fn.bindPasteFilter = function() {
+      Txt.fn.bindPasteFilter = function () {
         var self = this
         var editor = self.editor
         var resultHtml = '' //存储最终的结果
@@ -2346,7 +2346,7 @@
         var legalTags = editor.config.legalTags
         var legalTagArr = legalTags.split(',')
 
-        $txt.on('paste', function(e) {
+        $txt.on('paste', function (e) {
           if (!editor.config.pasteFilter) {
             // 配置中取消了粘贴过滤
             return
@@ -2418,7 +2418,7 @@
                   // 查询链接
                   resultHtml = resultHtml.replace(
                     /<p>(https?:\/\/.*?)<\/p>/gi,
-                    function(match, link) {
+                    function (match, link) {
                       return (
                         '<p><a href="' +
                         link +
@@ -2474,13 +2474,13 @@
           // 如果是容器，则继续深度遍历
           if (nodeName === 'div') {
             childNodesClone = []
-            $.each(elem.childNodes, function(index, item) {
+            $.each(elem.childNodes, function (index, item) {
               // elem.childNodes 可获取TEXT节点，而 $elem.children() 就获取不到
               // 先将 elem.childNodes 拷贝一份，一面在循环递归过程中 elem 发生变化
               childNodesClone.push(item)
             })
             // 遍历子元素，执行操作
-            $.each(childNodesClone, function() {
+            $.each(childNodesClone, function () {
               handle(this)
             })
             return
@@ -2539,7 +2539,7 @@
             htmlForP = $elem.html()
 
             // 剔除 a img 之外的元素
-            htmlForP = htmlForP.replace(/<.*?>/gi, function(tag) {
+            htmlForP = htmlForP.replace(/<.*?>/gi, function (tag) {
               if (
                 tag === '</a>' ||
                 tag.indexOf('<a ') === 0 ||
@@ -2555,11 +2555,11 @@
           } else if (['ul', 'ol'].indexOf(nodeName) >= 0) {
             // ul ol元素，获取子元素（li元素）的text link img，再拼接
             $elem = $(elem)
-            $elem.children().each(function() {
+            $elem.children().each(function () {
               var $li = $(removeAttrs(this))
               var html = $li.html()
 
-              html = html.replace(/<.*?>/gi, function(tag) {
+              html = html.replace(/<.*?>/gi, function (tag) {
                 if (
                   tag === '</a>' ||
                   tag.indexOf('<a ') === 0 ||
@@ -2590,13 +2590,13 @@
           var exception = ['href', 'target', 'src', 'alt', 'rowspan', 'colspan'] //例外情况
 
           // 先存储下elem中所有 attr 的名称
-          $.each(attrs, function(key, attr) {
+          $.each(attrs, function (key, attr) {
             if (attr && attr.nodeType === 2) {
               attrNames.push(attr.nodeName)
             }
           })
           // 再根据名称删除所有attr
-          $.each(attrNames, function(key, attr) {
+          $.each(attrNames, function (key, attr) {
             if (exception.indexOf(attr) < 0) {
               // 除了 exception 规定的例外情况，删除其他属性
               elem.removeAttribute(attr)
@@ -2606,7 +2606,7 @@
           // 递归子节点
           var children = elem.childNodes
           if (children.length) {
-            $.each(children, function(key, value) {
+            $.each(children, function (key, value) {
               removeAttrs(value)
             })
           }
@@ -2616,7 +2616,7 @@
       }
 
       // 绑定 $txt.formatText() 方法
-      Txt.fn.bindFormatText = function() {
+      Txt.fn.bindFormatText = function () {
         var self = this
         var editor = self.editor
         var $txt = self.$txt
@@ -2626,7 +2626,7 @@
         var regArr = []
 
         // 将 E.config.legalTags 配置的有效字符，生成正则表达式
-        $.each(legalTagArr, function(k, tag) {
+        $.each(legalTagArr, function (k, tag) {
           var reg = '>\\s*<(' + tag + ')>'
           regArr.push(new RegExp(reg, 'ig'))
         })
@@ -2641,7 +2641,7 @@
         regArr.push(new RegExp('>\\s*<(code)>', 'ig'))
 
         // 生成 formatText 方法
-        $txt.formatText = function() {
+        $txt.formatText = function () {
           var $temp = $('<div>')
           var html = $txt.html()
 
@@ -2649,11 +2649,11 @@
           html = html.replace(/\s*</gi, '<')
 
           // 段落、表格之间换行
-          $.each(regArr, function(k, reg) {
+          $.each(regArr, function (k, reg) {
             if (!reg.test(html)) {
               return
             }
-            html = html.replace(reg, function(matchStr, tag) {
+            html = html.replace(reg, function (matchStr, tag) {
               return '>\n<' + tag + '>'
             })
           })
@@ -2664,14 +2664,14 @@
       }
 
       // 定制 $txt.html 方法
-      Txt.fn.bindHtml = function() {
+      Txt.fn.bindHtml = function () {
         var self = this
         var editor = self.editor
         var $txt = self.$txt
         var $valueContainer = editor.$valueContainer
         var valueNodeName = editor.valueNodeName
 
-        $txt.html = function(html) {
+        $txt.html = function (html) {
           var result
 
           if (valueNodeName === 'div') {
@@ -2687,7 +2687,7 @@
 
             // 替换 html 中，src和href属性中的 & 字符。
             // 因为 .html() 或者 .innerHTML 会把所有的 & 字符都改成 &amp; 但是 src 和 href 中的要保持 &
-            result = result.replace(/(href|src)\=\"(.*)\"/gim, function(
+            result = result.replace(/(href|src)\=\"(.*)\"/gim, function (
               a,
               b,
               c
@@ -2710,20 +2710,20 @@
       }
     })
     // Txt.fn api
-    _e(function(E, $) {
+    _e(function (E, $) {
       var Txt = E.Txt
 
       var txtChangeEventNames = 'propertychange change click keyup input paste'
 
       // 渲染
-      Txt.fn.render = function() {
+      Txt.fn.render = function () {
         var $txt = this.$txt
         var $editorContainer = this.editor.$editorContainer
         $editorContainer.append($txt)
       }
 
       // 计算高度
-      Txt.fn.initHeight = function() {
+      Txt.fn.initHeight = function () {
         var editor = this.editor
         var $txt = this.$txt
         var valueContainerHeight = editor.$valueContainer.height()
@@ -2743,7 +2743,7 @@
       }
 
       // 计算最大高度
-      Txt.fn.initMaxHeight = function(txtHeight, menuHeight) {
+      Txt.fn.initMaxHeight = function (txtHeight, menuHeight) {
         var editor = this.editor
         var $menuContainer = editor.menuContainer.$menuContainer
         var $txt = this.$txt
@@ -2783,7 +2783,7 @@
           })
 
           // 滚动式，菜单阴影
-          $wrap.on('scroll', function() {
+          $wrap.on('scroll', function () {
             if ($txt.parent().scrollTop() > 10) {
               $menuContainer.addClass('wangEditor-menu-shadow')
             } else {
@@ -2797,7 +2797,7 @@
       }
 
       // 保存选区
-      Txt.fn.saveSelectionEvent = function() {
+      Txt.fn.saveSelectionEvent = function () {
         var $txt = this.$txt
         var editor = this.editor
         var timeoutId
@@ -2828,7 +2828,7 @@
         }
 
         // txt change 、focus、blur 时随时保存选区
-        $txt.on(txtChangeEventNames + ' focus blur', function(e) {
+        $txt.on(txtChangeEventNames + ' focus blur', function (e) {
           // 先同步保存选区，为了让接下来就马上要执行 editor.getRangeElem() 的程序
           // 能够获取到正确的 rangeElem
           saveSync()
@@ -2839,8 +2839,8 @@
 
         // 鼠标拖拽选择时，可能会拖拽到编辑器区域外面再松手，此时 $txt 就监听不到 click事件了
         $txt
-          .on('mousedown', function() {
-            $txt.on('mouseleave.saveSelection', function(e) {
+          .on('mousedown', function () {
+            $txt.on('mouseleave.saveSelection', function (e) {
               // 先同步后异步，如上述注释
               saveSync()
               saveAync()
@@ -2849,13 +2849,13 @@
               editor.updateMenuStyle()
             })
           })
-          .on('mouseup', function() {
+          .on('mouseup', function () {
             $txt.off('mouseleave.saveSelection')
           })
       }
 
       // 随时更新 value
-      Txt.fn.updateValueEvent = function() {
+      Txt.fn.updateValueEvent = function () {
         var $txt = this.$txt
         var editor = this.editor
         var timeoutId, oldValue
@@ -2881,7 +2881,7 @@
         }
 
         // txt change 时随时更新内容
-        $txt.on(txtChangeEventNames, function(e) {
+        $txt.on(txtChangeEventNames, function (e) {
           // 初始化
           if (oldValue == null) {
             oldValue = $txt.html()
@@ -2896,18 +2896,18 @@
       }
 
       // 随时更新 menustyle
-      Txt.fn.updateMenuStyleEvent = function() {
+      Txt.fn.updateMenuStyleEvent = function () {
         var $txt = this.$txt
         var editor = this.editor
 
         // txt change 时随时更新内容
-        $txt.on(txtChangeEventNames, function(e) {
+        $txt.on(txtChangeEventNames, function (e) {
           editor.updateMenuStyle()
         })
       }
 
       // 最后插入试图插入 <p><br><p>
-      Txt.fn.insertEmptyP = function() {
+      Txt.fn.insertEmptyP = function () {
         var $txt = this.$txt
         var $children = $txt.children()
 
@@ -2922,7 +2922,7 @@
       }
 
       // 将编辑器暴露出来的文字和图片，都用 p 来包裹
-      Txt.fn.wrapImgAndText = function() {
+      Txt.fn.wrapImgAndText = function () {
         var $txt = this.$txt
         var $imgs = $txt.children('img')
         var txt = $txt[0]
@@ -2932,7 +2932,7 @@
 
         // 处理图片
         $imgs.length &&
-          $imgs.each(function() {
+          $imgs.each(function () {
             $(this).wrap('<p>')
           })
 
@@ -2950,11 +2950,11 @@
       }
 
       // 清空内容为空的<p>，以及重复包裹的<p>（在windows下的chrome粘贴文字之后，会出现上述情况）
-      Txt.fn.clearEmptyOrNestP = function() {
+      Txt.fn.clearEmptyOrNestP = function () {
         var $txt = this.$txt
         var $pList = $txt.find('p')
 
-        $pList.each(function() {
+        $pList.each(function () {
           var $p = $(this)
           var $children = $p.children()
           var childrenLength = $children.length
@@ -2978,7 +2978,7 @@
       }
 
       // 获取 scrollTop
-      Txt.fn.scrollTop = function(val) {
+      Txt.fn.scrollTop = function (val) {
         var self = this
         var editor = self.editor
         var $txt = self.$txt
@@ -2991,7 +2991,7 @@
       }
 
       // 鼠标hover时候，显示p、head的高度
-      Txt.fn.showHeightOnHover = function() {
+      Txt.fn.showHeightOnHover = function () {
         var editor = this.editor
         var $editorContainer = editor.$editorContainer
         var menuContainer = editor.menuContainer
@@ -3054,21 +3054,21 @@
           .on(
             'mouseenter',
             'ul,ol,blockquote,p,h1,h2,h3,h4,h5,table,pre',
-            function(e) {
+            function (e) {
               addAndShowTip($(e.currentTarget))
             }
           )
-          .on('mouseleave', function() {
+          .on('mouseleave', function () {
             removeTip()
           })
       }
     })
     // 工具函数
-    _e(function(E, $) {
+    _e(function (E, $) {
       // IE8 [].indexOf()
       if (!Array.prototype.indexOf) {
         //IE低版本不支持 arr.indexOf
-        Array.prototype.indexOf = function(elem) {
+        Array.prototype.indexOf = function (elem) {
           var i = 0,
             length = this.length
           for (; i < length; i++) {
@@ -3079,7 +3079,7 @@
           return -1
         }
         //IE低版本不支持 arr.lastIndexOf
-        Array.prototype.lastIndexOf = function(elem) {
+        Array.prototype.lastIndexOf = function (elem) {
           var length = this.length
           for (length = length - 1; length >= 0; length--) {
             if (this[length] === elem) {
@@ -3092,20 +3092,20 @@
 
       // IE8 Date.now()
       if (!Date.now) {
-        Date.now = function() {
+        Date.now = function () {
           return new Date().valueOf()
         }
       }
 
       // console.log && console.warn && console.error
       var console = window.console
-      var emptyFn = function() {}
-      $.each(['info', 'log', 'warn', 'error'], function(key, value) {
+      var emptyFn = function () { }
+      $.each(['info', 'log', 'warn', 'error'], function (key, value) {
         if (console == null) {
           E[value] = emptyFn
         } else {
           var _tt = this
-          E[value] = function(info) {
+          E[value] = function (info) {
             // 通过配置来控制打印输出
             if (E.config && E.config.printLog) {
               console[value]('wangEditor提示: ' + info)
@@ -3115,7 +3115,7 @@
       })
 
       // 获取随机数
-      E.random = function() {
+      E.random = function () {
         return Math.random()
           .toString()
           .slice(2)
@@ -3125,11 +3125,11 @@
       E.placeholder = 'placeholder' in document.createElement('input')
 
       // 兼容IE8的 input placeholder
-      E.placeholderForIE8 = function($container) {
+      E.placeholderForIE8 = function ($container) {
         if (E.placeholder) {
           return
         }
-        $container.find('input[placeholder]').each(function() {
+        $container.find('input[placeholder]').each(function () {
           var $input = $(this)
           var placeholder = $input.attr('placeholder')
 
@@ -3137,7 +3137,7 @@
             $input.css('color', '#666')
             $input.val(placeholder)
 
-            $input.on('focus.placeholder click.placeholder', function() {
+            $input.on('focus.placeholder click.placeholder', function () {
               $input.val('')
               $input.css('color', '#333')
               $input.off('focus.placeholder click.placeholder')
@@ -3147,7 +3147,7 @@
       }
     })
     // 语言包
-    _e(function(E, $) {
+    _e(function (E, $) {
       E.langs = {}
 
       // 中文
@@ -3249,7 +3249,7 @@
       }
     })
     // 全局配置
-    _e(function(E, $) {
+    _e(function (E, $) {
       E.config = {}
 
       // 全屏时的 z-index
@@ -3484,7 +3484,7 @@
       E.config.codeDefaultLang = 'javascript'
     })
     // 全局UI
-    _e(function(E, $) {
+    _e(function (E, $) {
       E.UI = {}
 
       // 为菜单自定义配置的UI
@@ -3639,22 +3639,22 @@
       }
     })
     // 对象配置
-    _e(function(E, $) {
-      E.fn.initDefaultConfig = function() {
+    _e(function (E, $) {
+      E.fn.initDefaultConfig = function () {
         var editor = this
         editor.config = $.extend({}, E.config)
         editor.UI = $.extend({}, E.UI)
       }
     })
     // 增加 container
-    _e(function(E, $) {
-      E.fn.addEditorContainer = function() {
+    _e(function (E, $) {
+      E.fn.addEditorContainer = function () {
         this.$editorContainer = $('<div class="wangEditor-container"></div>')
       }
     })
     // 增加编辑区域对象
-    _e(function(E, $) {
-      E.fn.addTxt = function() {
+    _e(function (E, $) {
+      E.fn.addTxt = function () {
         var editor = this
         var txt = new E.Txt(editor)
 
@@ -3662,22 +3662,22 @@
       }
     })
     // 增加menuContainer对象
-    _e(function(E, $) {
-      E.fn.addMenuContainer = function() {
+    _e(function (E, $) {
+      E.fn.addMenuContainer = function () {
         var editor = this
         editor.menuContainer = new E.MenuContainer(editor)
       }
     })
     // 增加menus
-    _e(function(E, $) {
+    _e(function (E, $) {
       // 存储创建菜单的函数
       E.createMenuFns = []
-      E.createMenu = function(fn) {
+      E.createMenu = function (fn) {
         E.createMenuFns.push(fn)
       }
 
       // 创建所有菜单
-      E.fn.addMenus = function() {
+      E.fn.addMenus = function () {
         var editor = this
         var menuIds = editor.config.menus
 
@@ -3690,14 +3690,14 @@
         }
 
         // 遍历所有的菜单创建函数，并执行
-        $.each(E.createMenuFns, function(k, createMenuFn) {
+        $.each(E.createMenuFns, function (k, createMenuFn) {
           createMenuFn.call(editor, check)
         })
       }
     })
     // bold菜单
-    _e(function(E, $) {
-      E.createMenu(function(check) {
+    _e(function (E, $) {
+      E.createMenu(function (check) {
         var menuId = 'bold'
         if (!check(menuId)) {
           return
@@ -3715,7 +3715,7 @@
         })
 
         // 定义选中状态下的click事件
-        menu.clickEventSelected = function(e) {
+        menu.clickEventSelected = function (e) {
           var isRangeEmpty = editor.isRangeEmpty()
           if (!isRangeEmpty) {
             // 如果选区有内容，则执行基础命令
@@ -3731,8 +3731,8 @@
       })
     })
     // underline菜单
-    _e(function(E, $) {
-      E.createMenu(function(check) {
+    _e(function (E, $) {
+      E.createMenu(function (check) {
         var menuId = 'underline'
         if (!check(menuId)) {
           return
@@ -3750,7 +3750,7 @@
         })
 
         // 定义选中状态下的click事件
-        menu.clickEventSelected = function(e) {
+        menu.clickEventSelected = function (e) {
           var isRangeEmpty = editor.isRangeEmpty()
           if (!isRangeEmpty) {
             // 如果选区有内容，则执行基础命令
@@ -3766,8 +3766,8 @@
       })
     })
     // italic 菜单
-    _e(function(E, $) {
-      E.createMenu(function(check) {
+    _e(function (E, $) {
+      E.createMenu(function (check) {
         var menuId = 'italic'
         if (!check(menuId)) {
           return
@@ -3784,7 +3784,7 @@
         })
 
         // 定义选中状态下的click事件
-        menu.clickEventSelected = function(e) {
+        menu.clickEventSelected = function (e) {
           var isRangeEmpty = editor.isRangeEmpty()
           if (!isRangeEmpty) {
             // 如果选区有内容，则执行基础命令
@@ -3800,8 +3800,8 @@
       })
     })
     // forecolor 菜单
-    _e(function(E, $) {
-      E.createMenu(function(check) {
+    _e(function (E, $) {
+      E.createMenu(function (check) {
         var menuId = 'forecolor'
         if (!check(menuId)) {
           return
@@ -3819,7 +3819,7 @@
 
         // 创建 dropPanel
         var $content = $('<div></div>')
-        $.each(configColors, function(k, v) {
+        $.each(configColors, function (k, v) {
           $content.append(
             [
               '<a href="#" class="color-item"',
@@ -3829,7 +3829,7 @@
             ].join('')
           )
         })
-        $content.on('click', 'a[commandValue]', function(e) {
+        $content.on('click', 'a[commandValue]', function (e) {
           // 执行命令
           var $elem = $(this)
           var commandValue = $elem.attr('commandValue')
@@ -3848,7 +3848,7 @@
         })
 
         // 定义 update selected 事件
-        menu.updateSelectedEvent = function() {
+        menu.updateSelectedEvent = function () {
           var rangeElem = editor.getRangeElem()
           rangeElem = editor.getSelfOrParentByName(rangeElem, 'font[color]')
           if (rangeElem) {
@@ -3862,8 +3862,8 @@
       })
     })
     // bgcolor 菜单
-    _e(function(E, $) {
-      E.createMenu(function(check) {
+    _e(function (E, $) {
+      E.createMenu(function (check) {
         var menuId = 'bgcolor'
         if (!check(menuId)) {
           return
@@ -3893,7 +3893,7 @@
 
         // 创建 dropPanel
         var $content = $('<div></div>')
-        $.each(configColors, function(k, v) {
+        $.each(configColors, function (k, v) {
           $content.append(
             [
               '<a href="#" class="color-item"',
@@ -3903,7 +3903,7 @@
             ].join('')
           )
         })
-        $content.on('click', 'a[commandValue]', function(e) {
+        $content.on('click', 'a[commandValue]', function (e) {
           // 执行命令
 
           var $elem = $(this)
@@ -3931,7 +3931,7 @@
         })
 
         // 定义 update selected 事件
-        menu.updateSelectedEvent = function() {
+        menu.updateSelectedEvent = function () {
           var rangeElem = editor.getRangeElem()
           rangeElem = editor.getSelfOrParentByName(
             rangeElem,
@@ -3950,8 +3950,8 @@
       })
     })
     // strikethrough 菜单
-    _e(function(E, $) {
-      E.createMenu(function(check) {
+    _e(function (E, $) {
+      E.createMenu(function (check) {
         var menuId = 'strikethrough'
         if (!check(menuId)) {
           return
@@ -3968,7 +3968,7 @@
         })
 
         // 定义选中状态下的click事件
-        menu.clickEventSelected = function(e) {
+        menu.clickEventSelected = function (e) {
           var isRangeEmpty = editor.isRangeEmpty()
           if (!isRangeEmpty) {
             // 如果选区有内容，则执行基础命令
@@ -3984,8 +3984,8 @@
       })
     })
     // eraser 菜单
-    _e(function(E, $) {
-      E.createMenu(function(check) {
+    _e(function (E, $) {
+      E.createMenu(function (check) {
         var menuId = 'eraser'
         if (!check(menuId)) {
           return
@@ -4002,7 +4002,7 @@
         })
 
         // 定义点击事件
-        menu.clickEvent = function(e) {
+        menu.clickEvent = function (e) {
           var isRangeEmpty = editor.isRangeEmpty()
 
           if (!isRangeEmpty) {
@@ -4064,8 +4064,8 @@
       })
     })
     // source 菜单
-    _e(function(E, $) {
-      E.createMenu(function(check) {
+    _e(function (E, $) {
+      E.createMenu(function (check) {
         var menuId = 'source'
         if (!check(menuId)) {
           return
@@ -4106,7 +4106,7 @@
         }
 
         // 定义click事件
-        menu.clickEvent = function(e) {
+        menu.clickEvent = function (e) {
           var self = this
           var editor = self.editor
           var $txt = editor.txt.$txt
@@ -4128,7 +4128,7 @@
           $code.val($txt.html())
 
           // 监控变化
-          $code.on('change', function(e) {
+          $code.on('change', function (e) {
             updateValue()
           })
 
@@ -4150,7 +4150,7 @@
         }
 
         // 定义选中状态下的click事件
-        menu.clickEventSelected = function(e) {
+        menu.clickEventSelected = function (e) {
           var self = this
           var editor = self.editor
           var $txt = editor.txt.$txt
@@ -4186,7 +4186,7 @@
         }
 
         // 定义切换选中状态事件
-        menu.updateSelectedEvent = function() {
+        menu.updateSelectedEvent = function () {
           return this.isShowCode
         }
 
@@ -4195,8 +4195,8 @@
       })
     })
     // quote 菜单
-    _e(function(E, $) {
-      E.createMenu(function(check) {
+    _e(function (E, $) {
+      E.createMenu(function (check) {
         var menuId = 'quote'
         if (!check(menuId)) {
           return
@@ -4214,7 +4214,7 @@
         })
 
         // 定义click事件
-        menu.clickEvent = function(e) {
+        menu.clickEvent = function (e) {
           var rangeElem = editor.getRangeElem()
           var $rangeElem
           if (!rangeElem) {
@@ -4269,7 +4269,7 @@
         }
 
         // 定义选中状态下的click事件
-        menu.clickEventSelected = function(e) {
+        menu.clickEventSelected = function (e) {
           var rangeElem
           var quoteElem
           var $lastChild
@@ -4291,7 +4291,7 @@
             $quoteElem = $(quoteElem)
             $children = $quoteElem.children()
             if ($children.length) {
-              $children.each(function(k) {
+              $children.each(function (k) {
                 var $item = $(this)
                 if ($item.get(0).nodeName === 'P') {
                   $quoteElem.after($item)
@@ -4319,7 +4319,7 @@
         }
 
         // 定义更新选中状态的事件
-        menu.updateSelectedEvent = function() {
+        menu.updateSelectedEvent = function () {
           var self = this //菜单对象
           var editor = self.editor
           var rangeElem
@@ -4338,11 +4338,11 @@
         editor.menus[menuId] = menu
 
         // --------------- 两次点击 enter 跳出引用 ---------------
-        editor.ready(function() {
+        editor.ready(function () {
           var editor = this
           var $txt = editor.txt.$txt
           var isPrevEnter = false // 是不是刚刚在quote中按了 enter 键
-          $txt.on('keydown', function(e) {
+          $txt.on('keydown', function (e) {
             if (e.keyCode !== 13) {
               // 不是 enter 键
               isPrevEnter = false
@@ -4379,7 +4379,7 @@
         }) // editor.ready(
 
         // --------------- 处理quote中无内容时不能删除的问题 ---------------
-        editor.ready(function() {
+        editor.ready(function () {
           var editor = this
           var $txt = editor.txt.$txt
           var $rangeElem
@@ -4401,7 +4401,7 @@
             }
           }
 
-          $txt.on('keydown', function(e) {
+          $txt.on('keydown', function (e) {
             if (e.keyCode !== 8) {
               // 不是 backspace 键
               return
@@ -4426,8 +4426,8 @@
       })
     })
     // 字体 菜单
-    _e(function(E, $) {
-      E.createMenu(function(check) {
+    _e(function (E, $) {
+      E.createMenu(function (check) {
         var menuId = 'fontfamily'
         if (!check(menuId)) {
           return
@@ -4453,7 +4453,7 @@
                 ...
             }
         */
-        $.each(configFamilys, function(k, v) {
+        $.each(configFamilys, function (k, v) {
           // configFamilys 是数组，data 是对象
           data[v] = v
         })
@@ -4467,7 +4467,7 @@
         })
 
         // 定义 update selected 事件
-        menu.updateSelectedEvent = function() {
+        menu.updateSelectedEvent = function () {
           var rangeElem = editor.getRangeElem()
           rangeElem = editor.getSelfOrParentByName(rangeElem, 'font[face]')
           if (rangeElem) {
@@ -4481,8 +4481,8 @@
       })
     })
     // 字号 菜单
-    _e(function(E, $) {
-      E.createMenu(function(check) {
+    _e(function (E, $) {
+      E.createMenu(function (check) {
         var menuId = 'fontsize'
         if (!check(menuId)) {
           return
@@ -4518,7 +4518,7 @@
         })
 
         // 定义 update selected 事件
-        menu.updateSelectedEvent = function() {
+        menu.updateSelectedEvent = function () {
           var rangeElem = editor.getRangeElem()
           rangeElem = editor.getSelfOrParentByName(rangeElem, 'font[size]')
           if (rangeElem) {
@@ -4532,8 +4532,8 @@
       })
     })
     // head 菜单
-    _e(function(E, $) {
-      E.createMenu(function(check) {
+    _e(function (E, $) {
+      E.createMenu(function (check) {
         var menuId = 'head'
         if (!check(menuId)) {
           return
@@ -4595,7 +4595,7 @@
         })
 
         // 定义 update selected 事件
-        menu.updateSelectedEvent = function() {
+        menu.updateSelectedEvent = function () {
           var rangeElem = editor.getRangeElem()
           rangeElem = editor.getSelfOrParentByName(rangeElem, 'h1,h2,h3,h4,h5')
           if (rangeElem) {
@@ -4609,8 +4609,8 @@
       })
     })
     // unorderlist 菜单
-    _e(function(E, $) {
-      E.createMenu(function(check) {
+    _e(function (E, $) {
+      E.createMenu(function (check) {
         var menuId = 'unorderlist'
         if (!check(menuId)) {
           return
@@ -4631,8 +4631,8 @@
       })
     })
     // orderlist 菜单
-    _e(function(E, $) {
-      E.createMenu(function(check) {
+    _e(function (E, $) {
+      E.createMenu(function (check) {
         var menuId = 'orderlist'
         if (!check(menuId)) {
           return
@@ -4653,8 +4653,8 @@
       })
     })
     // alignleft 菜单
-    _e(function(E, $) {
-      E.createMenu(function(check) {
+    _e(function (E, $) {
+      E.createMenu(function (check) {
         var menuId = 'alignleft'
         if (!check(menuId)) {
           return
@@ -4671,12 +4671,12 @@
         })
 
         // 定义 update selected 事件
-        menu.updateSelectedEvent = function() {
+        menu.updateSelectedEvent = function () {
           var rangeElem = editor.getRangeElem()
           rangeElem = editor.getSelfOrParentByName(
             rangeElem,
             'p,h1,h2,h3,h4,h5,li',
-            function(elem) {
+            function (elem) {
               var cssText
               if (elem && elem.style && elem.style.cssText != null) {
                 cssText = elem.style.cssText
@@ -4702,8 +4702,8 @@
       })
     })
     // aligncenter 菜单
-    _e(function(E, $) {
-      E.createMenu(function(check) {
+    _e(function (E, $) {
+      E.createMenu(function (check) {
         var menuId = 'aligncenter'
         if (!check(menuId)) {
           return
@@ -4720,12 +4720,12 @@
         })
 
         // 定义 update selected 事件
-        menu.updateSelectedEvent = function() {
+        menu.updateSelectedEvent = function () {
           var rangeElem = editor.getRangeElem()
           rangeElem = editor.getSelfOrParentByName(
             rangeElem,
             'p,h1,h2,h3,h4,h5,li',
-            function(elem) {
+            function (elem) {
               var cssText
               if (elem && elem.style && elem.style.cssText != null) {
                 cssText = elem.style.cssText
@@ -4751,8 +4751,8 @@
       })
     })
     // alignright 菜单
-    _e(function(E, $) {
-      E.createMenu(function(check) {
+    _e(function (E, $) {
+      E.createMenu(function (check) {
         var menuId = 'alignright'
         if (!check(menuId)) {
           return
@@ -4769,12 +4769,12 @@
         })
 
         // 定义 update selected 事件
-        menu.updateSelectedEvent = function() {
+        menu.updateSelectedEvent = function () {
           var rangeElem = editor.getRangeElem()
           rangeElem = editor.getSelfOrParentByName(
             rangeElem,
             'p,h1,h2,h3,h4,h5,li',
-            function(elem) {
+            function (elem) {
               var cssText
               if (elem && elem.style && elem.style.cssText != null) {
                 cssText = elem.style.cssText
@@ -4800,8 +4800,8 @@
       })
     })
     // link 菜单
-    _e(function(E, $) {
-      E.createMenu(function(check) {
+    _e(function (E, $) {
+      E.createMenu(function (check) {
         var menuId = 'link'
         if (!check(menuId)) {
           return
@@ -4830,8 +4830,8 @@
         )
         var $targetInput = $(
           '<input type="text" class="block" placeholder="' +
-            lang.linkTarget +
-            ': _self / _blank / _top / _parent" />'
+          lang.linkTarget +
+          ': _self / _blank / _top / _parent" />'
         )
         var $btnSubmit = $('<button class="right">' + lang.submit + '</button>')
         var $btnCancel = $(
@@ -4854,7 +4854,7 @@
         })
 
         // 定义click事件
-        menu.clickEvent = function(e) {
+        menu.clickEvent = function (e) {
           var menu = this
           var dropPanel = menu.dropPanel
 
@@ -4912,7 +4912,7 @@
         }
 
         // 定义 update selected 事件
-        menu.updateSelectedEvent = function() {
+        menu.updateSelectedEvent = function () {
           var rangeElem = editor.getRangeElem()
           rangeElem = editor.getSelfOrParentByName(rangeElem, 'a')
           if (rangeElem) {
@@ -4922,13 +4922,13 @@
         }
 
         // 『取消』 按钮
-        $btnCancel.click(function(e) {
+        $btnCancel.click(function (e) {
           e.preventDefault()
           menu.dropPanel.hide()
         })
 
         // 『确定』按钮
-        $btnSubmit.click(function(e) {
+        $btnSubmit.click(function (e) {
           e.preventDefault()
           var rangeElem = editor.getRangeElem()
           var targetElem = editor.getSelfOrParentByName(rangeElem, 'a')
@@ -4970,12 +4970,12 @@
           } else if (targetElem) {
             // 无选中区域，在 a 标签之内，修改该 a 标签的内容和链接
             $linkElem = $(targetElem)
-            commandFn = function() {
+            commandFn = function () {
               $linkElem.attr('href', url)
               $linkElem.text(text)
               target && $linkElem.attr('target', target)
             }
-            callback = function() {
+            callback = function () {
               var editor = this
               editor.restoreSelectionByElem(targetElem)
             }
@@ -5003,8 +5003,8 @@
       })
     })
     // unlink 菜单
-    _e(function(E, $) {
-      E.createMenu(function(check) {
+    _e(function (E, $) {
+      E.createMenu(function (check) {
         var menuId = 'unlink'
         if (!check(menuId)) {
           return
@@ -5021,7 +5021,7 @@
         })
 
         // click 事件
-        menu.clickEvent = function(e) {
+        menu.clickEvent = function (e) {
           var isRangeEmpty = editor.isRangeEmpty()
           if (!isRangeEmpty) {
             // 有选中区域，或者IE8，执行默认命令
@@ -5056,8 +5056,8 @@
       })
     })
     // table 菜单
-    _e(function(E, $) {
-      E.createMenu(function(check) {
+    _e(function (E, $) {
+      E.createMenu(function (check) {
         var menuId = 'table'
         if (!check(menuId)) {
           return
@@ -5103,7 +5103,7 @@
 
         // 定义table事件
         $table
-          .on('mouseenter', 'td', function(e) {
+          .on('mouseenter', 'td', function (e) {
             var $currentTd = $(e.currentTarget)
             var currentTdIndex = $currentTd.attr('index')
             var $currentTr = $currentTd.parent()
@@ -5114,12 +5114,12 @@
             $col.text(currentTdIndex)
 
             // 遍历设置背景颜色
-            $table.find('tr').each(function() {
+            $table.find('tr').each(function () {
               var $tr = $(this)
               var trIndex = $tr.attr('index')
               if (parseInt(trIndex, 10) <= parseInt(currentTrIndex, 10)) {
                 // 该行需要可能需要设置背景色
-                $tr.find('td').each(function() {
+                $tr.find('td').each(function () {
                   var $td = $(this)
                   var tdIndex = $td.attr('index')
                   if (parseInt(tdIndex, 10) <= parseInt(currentTdIndex, 10)) {
@@ -5136,7 +5136,7 @@
               }
             })
           })
-          .on('mouseleave', function(e) {
+          .on('mouseleave', function (e) {
             // mouseleave 删除背景色
             $table.find('td').removeClass('active')
 
@@ -5145,7 +5145,7 @@
           })
 
         // 插入表格
-        $table.on('click', 'td', function(e) {
+        $table.on('click', 'td', function (e) {
           var $currentTd = $(e.currentTarget)
           var currentTdIndex = $currentTd.attr('index')
           var $currentTr = $currentTd.parent()
@@ -5183,8 +5183,8 @@
       })
     })
     // emotion 菜单
-    _e(function(E, $) {
-      E.createMenu(function(check) {
+    _e(function (E, $) {
+      E.createMenu(function (check) {
         var menuId = 'emotion'
         if (!check(menuId)) {
           return
@@ -5208,7 +5208,7 @@
         // 添加表情图片的函数
         function insertEmotionImgs(data, $tabContent) {
           // 添加表情图片
-          $.each(data, function(k, emotion) {
+          $.each(data, function (k, emotion) {
             var src = emotion.icon || emotion.url
             var value = emotion.value || emotion.title
             // 通过配置 editor.config.emotionsShow 的值来修改插入到编辑器的内容（图片/value）
@@ -5233,7 +5233,7 @@
         var $contentContainer = $(
           '<div class="content-container emotion-content-container"></div>'
         )
-        $.each(configEmotions, function(k, emotion) {
+        $.each(configEmotions, function (k, emotion) {
           var title = emotion.title
           var data = emotion.data
 
@@ -5246,7 +5246,7 @@
           $contentContainer.append($tabContent)
 
           // tab 切换事件
-          $tab.click(function(e) {
+          $tab.click(function (e) {
             $tabContainer.children().removeClass('selected')
             $contentContainer.children().removeClass('selected')
             $tabContent.addClass('selected')
@@ -5258,7 +5258,7 @@
           if (typeof data === 'string') {
             // url 形式，需要通过ajax从该url获取数据
             E.log('将通过 ' + data + ' 地址ajax下载表情包')
-            $.get(data, function(result) {
+            $.get(data, function (result) {
               result = $.parseJSON(result)
               E.log('下载完毕，得到 ' + result.length + ' 个表情')
               insertEmotionImgs(result, $tabContent)
@@ -5292,7 +5292,7 @@
           .addClass('selected')
 
         // 插入表情command事件
-        $contentContainer.on('click', 'a[commandValue]', function(e) {
+        $contentContainer.on('click', 'a[commandValue]', function (e) {
           var $a = $(e.currentTarget)
           var commandValue = $a.attr('commandValue')
           var img
@@ -5317,7 +5317,7 @@
         })
 
         // 定义click事件（异步加载表情图片）
-        menu.clickEvent = function(e) {
+        menu.clickEvent = function (e) {
           var menu = this
           var dropPanel = menu.dropPanel
 
@@ -5334,10 +5334,10 @@
           if (menu.imgLoaded) {
             return
           }
-          $contentContainer.find('img').each(function() {
+          $contentContainer.find('img').each(function () {
             var $img = $(this)
             var _src = $img.attr('_src')
-            $img.on('error', function() {
+            $img.on('error', function () {
               E.error('加载不出表情图片 ' + _src)
             })
             $img.attr('src', _src)
@@ -5351,8 +5351,8 @@
       })
     })
     // img 菜单
-    _e(function(E, $) {
-      E.createMenu(function(check) {
+    _e(function (E, $) {
+      E.createMenu(function (check) {
         var menuId = 'img'
         if (!check(menuId)) {
           return
@@ -5391,7 +5391,7 @@
         menu.dropPanel = new E.DropPanel(editor, menu, {
           $content: $panelContent,
           width: 400,
-          onRender: function() {
+          onRender: function () {
             // 渲染后的回调事件，用于执行自定义上传的init
             // 因为渲染之后，上传面板的dom才会被渲染到页面，才能让第三方空间获取到
             var init = editor.config.customUploadInit
@@ -5404,14 +5404,14 @@
 
         // tab 切换事件
         function tabToggle() {
-          $uploadTab.click(function(e) {
+          $uploadTab.click(function (e) {
             $tabContainer.children().removeClass('selected')
             $contentContainer.children().removeClass('selected')
             $uploadContent.addClass('selected')
             $uploadTab.addClass('selected')
             e.preventDefault()
           })
-          $linkTab.click(function(e) {
+          $linkTab.click(function (e) {
             $tabContainer.children().removeClass('selected')
             $contentContainer.children().removeClass('selected')
             $linkContent.addClass('selected')
@@ -5445,7 +5445,7 @@
         }
 
         // 判断用户是否配置了上传图片
-        editor.ready(function() {
+        editor.ready(function () {
           var editor = this
           var config = editor.config
           var uploadImgUrl = config.uploadImgUrl
@@ -5475,7 +5475,7 @@
           function hidePanel() {
             menu.dropPanel.hide()
           }
-          $uploadContent.click(function() {
+          $uploadContent.click(function () {
             setTimeout(hidePanel)
           })
         })
@@ -5500,7 +5500,7 @@
           .append($btnCancel)
 
         // 取消
-        $btnCancel.click(function(e) {
+        $btnCancel.click(function (e) {
           e.preventDefault()
           menu.dropPanel.hide()
         })
@@ -5511,7 +5511,7 @@
         }
 
         // 确定
-        $btnSubmit.click(function(e) {
+        $btnSubmit.click(function (e) {
           e.preventDefault()
           var url = $.trim($urlInput.val())
           if (!url) {
@@ -5526,8 +5526,8 @@
       }
     })
     // video 菜单
-    _e(function(E, $) {
-      E.createMenu(function(check) {
+    _e(function (E, $) {
+      E.createMenu(function (check) {
         var menuId = 'video'
         if (!check(menuId)) {
           return
@@ -5582,14 +5582,14 @@
           .append($btnContainer)
 
         // 取消按钮
-        $btnCancel.click(function(e) {
+        $btnCancel.click(function (e) {
           e.preventDefault()
           $linkInput.val('')
           menu.dropPanel.hide()
         })
 
         // 确定按钮
-        $btnSubmit.click(function(e) {
+        $btnSubmit.click(function (e) {
           e.preventDefault()
           var link = $.trim($linkInput.val())
           var $link
@@ -5639,7 +5639,7 @@
       })
     })
     // insertcode 菜单
-    _e(function(E, $) {
+    _e(function (E, $) {
       // 加载 highlightjs 代码
       function loadHljs() {
         if (E.userAgent.indexOf('MSIE 8') > 0) {
@@ -5656,7 +5656,7 @@
         document.body.appendChild(script)
       }
 
-      E.createMenu(function(check) {
+      E.createMenu(function (check) {
         var menuId = 'insertcode'
         if (!check(menuId)) {
           return
@@ -5678,7 +5678,7 @@
         })
 
         // click 事件
-        menu.clickEvent = function(e) {
+        menu.clickEvent = function (e) {
           var menu = this
           var dropPanel = menu.dropPanel
 
@@ -5702,17 +5702,17 @@
               'margin-top': '9px',
               'margin-left': '5px'
             })
-            $.each(hljs.listLanguages(), function(key, lang) {
+            $.each(hljs.listLanguages(), function (key, lang) {
               if (lang === 'xml') {
                 lang = 'html'
               }
               if (lang === config.codeDefaultLang) {
                 $langSelect.append(
                   '<option value="' +
-                    lang +
-                    '" selected="selected">' +
-                    lang +
-                    '</option>'
+                  lang +
+                  '" selected="selected">' +
+                  lang +
+                  '</option>'
                 )
               } else {
                 $langSelect.append(
@@ -5726,7 +5726,7 @@
         }
 
         // 选中状态下的 click 事件
-        menu.clickEventSelected = function(e) {
+        menu.clickEventSelected = function (e) {
           var menu = this
           var dropPanel = menu.dropPanel
 
@@ -5764,7 +5764,7 @@
         }
 
         // 定义更新选中状态的事件
-        menu.updateSelectedEvent = function() {
+        menu.updateSelectedEvent = function () {
           var self = this //菜单对象
           var editor = self.editor
           var rangeElem
@@ -5806,7 +5806,7 @@
             height: '100%',
             padding: '10px'
           })
-          $textarea.on('keydown', function(e) {
+          $textarea.on('keydown', function (e) {
             // 取消 tab 键默认行为
             if (e.keyCode === 9) {
               e.preventDefault()
@@ -5831,7 +5831,7 @@
           $content.append($btnContainer)
 
           // 取消按钮
-          $btnCancel.click(function(e) {
+          $btnCancel.click(function (e) {
             e.preventDefault()
             menu.dropPanel.hide()
           })
@@ -5839,7 +5839,7 @@
           // 确定按钮
           var codeTpl =
             '<pre style="max-width:100%;overflow-x:auto;"><code{#langClass}>{#content}</code></pre>'
-          $btnSubmit.click(function(e) {
+          $btnSubmit.click(function (e) {
             e.preventDefault()
             var val = $textarea.val()
             if (!val) {
@@ -5858,8 +5858,8 @@
 
             var lang = $langSelect ? $langSelect.val() : '' // 获取高亮语言
             var langClass = ''
-            var doHightlight = function() {
-              $txt.find('pre code').each(function(i, block) {
+            var doHightlight = function () {
+              $txt.find('pre code').each(function (i, block) {
                 var $block = $(block)
                 if ($block.attr('codemark')) {
                   // 有 codemark 标记的代码块，就不再重新格式化了
@@ -5924,7 +5924,7 @@
         }
 
         // ------ enter 时，不另起标签，只换行 ------
-        $txt.on('keydown', function(e) {
+        $txt.on('keydown', function (e) {
           if (e.keyCode !== 13) {
             return
           }
@@ -5949,15 +5949,15 @@
             editor.enableMenusExcept('insertcode')
           }
         }
-        $txt.on('keydown click', function(e) {
+        $txt.on('keydown click', function (e) {
           // 此处必须使用 setTimeout 异步处理，否则不对
           setTimeout(updateMenu)
         })
       })
     })
     // undo 菜单
-    _e(function(E, $) {
-      E.createMenu(function(check) {
+    _e(function (E, $) {
+      E.createMenu(function (check) {
         var menuId = 'undo'
         if (!check(menuId)) {
           return
@@ -5973,7 +5973,7 @@
         })
 
         // click 事件
-        menu.clickEvent = function(e) {
+        menu.clickEvent = function (e) {
           editor.undo()
         }
 
@@ -5982,7 +5982,7 @@
 
         // ------------ 初始化时、enter 时、打字中断时，做记录 ------------
         // ------------ ctrl + z 是调用记录撤销，而不是使用浏览器默认的撤销 ------------
-        editor.ready(function() {
+        editor.ready(function () {
           var editor = this
           var $txt = editor.txt.$txt
           var timeoutId
@@ -5992,7 +5992,7 @@
             editor.undoRecord()
           }
 
-          $txt.on('keydown', function(e) {
+          $txt.on('keydown', function (e) {
             var keyCode = e.keyCode
 
             // 撤销 ctrl + z
@@ -6019,8 +6019,8 @@
       })
     })
     // redo 菜单
-    _e(function(E, $) {
-      E.createMenu(function(check) {
+    _e(function (E, $) {
+      E.createMenu(function (check) {
         var menuId = 'redo'
         if (!check(menuId)) {
           return
@@ -6036,7 +6036,7 @@
         })
 
         // click 事件
-        menu.clickEvent = function(e) {
+        menu.clickEvent = function (e) {
           editor.redo()
         }
 
@@ -6045,11 +6045,11 @@
       })
     })
     // 全屏 菜单
-    _e(function(E, $) {
+    _e(function (E, $) {
       // 记录全屏时的scrollTop
       var scrollTopWhenFullScreen
 
-      E.createMenu(function(check) {
+      E.createMenu(function (check) {
         var menuId = 'fullscreen'
         if (!check(menuId)) {
           return
@@ -6073,7 +6073,7 @@
         })
 
         // 定义click事件
-        menu.clickEvent = function(e) {
+        menu.clickEvent = function (e) {
           // 增加样式
           var $editorContainer = editor.$editorContainer
           $editorContainer.addClass('wangEditor-fullscreen')
@@ -6102,8 +6102,8 @@
           var menuContainer = editor.menuContainer
           $txt.height(
             E.$window.height() -
-              menuContainer.height() -
-              (txtOuterHeight - txtHeight) // 去掉内边距和外边距
+            menuContainer.height() -
+            (txtOuterHeight - txtHeight) // 去掉内边距和外边距
           )
 
           // 取消menuContainer的内联样式（menu吸顶时，会为 menuContainer 设置一些内联样式）
@@ -6120,7 +6120,7 @@
         }
 
         // 定义选中状态的 click 事件
-        menu.clickEventSelected = function(e) {
+        menu.clickEventSelected = function (e) {
           // 取消样式
           var $editorContainer = editor.$editorContainer
           $editorContainer.removeClass('wangEditor-fullscreen')
@@ -6150,7 +6150,7 @@
         }
 
         // 定义选中事件
-        menu.updateSelectedEvent = function(e) {
+        menu.updateSelectedEvent = function (e) {
           return isSelected
         }
 
@@ -6159,8 +6159,8 @@
       })
     })
     // 渲染menus
-    _e(function(E, $) {
-      E.fn.renderMenus = function() {
+    _e(function (E, $) {
+      E.fn.renderMenus = function () {
         var editor = this
         var menus = editor.menus
         var menuIds = editor.config.menus
@@ -6168,7 +6168,7 @@
 
         var menu
         var groupIdx = 0
-        $.each(menuIds, function(k, v) {
+        $.each(menuIds, function (k, v) {
           if (v === '|') {
             groupIdx++
             return
@@ -6182,8 +6182,8 @@
       }
     })
     // 渲染menus
-    _e(function(E, $) {
-      E.fn.renderMenuContainer = function() {
+    _e(function (E, $) {
+      E.fn.renderMenuContainer = function () {
         var editor = this
         var menuContainer = editor.menuContainer
         var $editorContainer = editor.$editorContainer
@@ -6192,22 +6192,22 @@
       }
     })
     // 渲染 txt
-    _e(function(E, $) {
-      E.fn.renderTxt = function() {
+    _e(function (E, $) {
+      E.fn.renderTxt = function () {
         var editor = this
         var txt = editor.txt
 
         txt.render()
 
         // ready 时候，计算txt的高度
-        editor.ready(function() {
+        editor.ready(function () {
           txt.initHeight()
         })
       }
     })
     // 渲染 container
-    _e(function(E, $) {
-      E.fn.renderEditorContainer = function() {
+    _e(function (E, $) {
+      E.fn.renderEditorContainer = function () {
         var editor = this
         var $valueContainer = editor.$valueContainer
         var $editorContainer = editor.$editorContainer
@@ -6236,24 +6236,24 @@
       }
     })
     // 菜单事件
-    _e(function(E, $) {
+    _e(function (E, $) {
       // 绑定每个菜单的click事件
-      E.fn.eventMenus = function() {
+      E.fn.eventMenus = function () {
         var menus = this.menus
 
         // 绑定菜单的点击事件
-        $.each(menus, function(k, v) {
+        $.each(menus, function (k, v) {
           v.bindEvent()
         })
       }
     })
     // 菜单container事件
-    _e(function(E, $) {
-      E.fn.eventMenuContainer = function() {}
+    _e(function (E, $) {
+      E.fn.eventMenuContainer = function () { }
     })
     // 编辑区域事件
-    _e(function(E, $) {
-      E.fn.eventTxt = function() {
+    _e(function (E, $) {
+      E.fn.eventTxt = function () {
         var txt = this.txt
 
         // txt内容变化时，保存选区
@@ -6273,14 +6273,14 @@
       }
     })
     // 上传图片事件
-    _e(function(E, $) {
-      E.plugin(function() {
+    _e(function (E, $) {
+      E.plugin(function () {
         var editor = this
         var fns = editor.config.uploadImgFns // editor.config.uploadImgFns = {} 在config文件中定义了
 
         // -------- 定义load函数 --------
         fns.onload ||
-          (fns.onload = function(resultText, xhr) {
+          (fns.onload = function (resultText, xhr) {
             E.log('上传结束，返回结果为 ' + resultText)
 
             var editor = this
@@ -6295,7 +6295,7 @@
 
               // 将结果插入编辑器
               img = document.createElement('img')
-              img.onload = function() {
+              img.onload = function () {
                 var html =
                   '<img src="' +
                   resultText +
@@ -6307,10 +6307,10 @@
                 E.log('已插入图片，地址 ' + resultText)
                 img = null
               }
-              img.onerror = function() {
+              img.onerror = function () {
                 E.error(
                   '使用返回的结果获取图片，发生错误。请确认以下结果是否正确：' +
-                    resultText
+                  resultText
                 )
                 img = null
               }
@@ -6320,27 +6320,27 @@
 
         // -------- 定义tiemout函数 --------
         fns.ontimeout ||
-          (fns.ontimeout = function(xhr) {
+          (fns.ontimeout = function (xhr) {
             E.error('上传图片超时')
             alert('上传图片超时')
           })
 
         // -------- 定义error函数 --------
         fns.onerror ||
-          (fns.onerror = function(xhr) {
+          (fns.onerror = function (xhr) {
             E.error('上传上图片发生错误')
             alert('上传上图片发生错误')
           })
       })
     })
     // xhr 上传图片
-    _e(function(E, $) {
+    _e(function (E, $) {
       if (!window.FileReader || !window.FormData) {
         // 如果不支持html5的文档操作，直接返回
         return
       }
 
-      E.plugin(function() {
+      E.plugin(function () {
         var editor = this
         var config = editor.config
         var uploadImgUrl = config.uploadImgUrl
@@ -6375,14 +6375,14 @@
         // -------- 插入图片的方法 --------
         function insertImg(src, event) {
           var img = document.createElement('img')
-          img.onload = function() {
+          img.onload = function () {
             var html = '<img src="' + src + '" style="max-width:100%;"/>'
             editor.command(event, 'insertHtml', html)
 
             E.log('已插入图片，地址 ' + src)
             img = null
           }
-          img.onerror = function() {
+          img.onerror = function () {
             E.error(
               '使用返回的结果获取图片，发生错误。请确认以下结果是否正确：' + src
             )
@@ -6400,7 +6400,7 @@
         }
 
         // -------- xhr 上传图片 --------
-        editor.xhrUploadImg = function(opt) {
+        editor.xhrUploadImg = function (opt) {
           // opt 数据
           var event = opt.event
           var fileName = opt.filename || ''
@@ -6462,7 +6462,7 @@
             editor.hideUploadProgress()
           }
 
-          xhr.onload = function() {
+          xhr.onload = function () {
             if (timeoutId) {
               clearTimeout(timeoutId)
             }
@@ -6479,7 +6479,7 @@
             // 隐藏进度条
             editor.hideUploadProgress()
           }
-          xhr.onerror = function() {
+          xhr.onerror = function () {
             if (timeoutId) {
               clearTimeout(timeoutId)
             }
@@ -6504,7 +6504,7 @@
           )
 
           // 添加参数
-          $.each(params, function(key, value) {
+          $.each(params, function (key, value) {
             formData.append(key, value)
           })
 
@@ -6513,7 +6513,7 @@
           // xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");  // 将参数解析成传统form的方式上传
 
           // 修改自定义配置的headers
-          $.each(headers, function(key, value) {
+          $.each(headers, function (key, value) {
             xhr.setRequestHeader(key, value)
           })
 
@@ -6529,8 +6529,8 @@
       })
     })
     // 进度条
-    _e(function(E, $) {
-      E.plugin(function() {
+    _e(function (E, $) {
+      E.plugin(function () {
         var editor = this
         var menuContainer = editor.menuContainer
         var menuHeight = menuContainer.height()
@@ -6553,7 +6553,7 @@
         }
 
         // ------ 显示进度 ------
-        editor.showUploadProgress = function(progress) {
+        editor.showUploadProgress = function (progress) {
           if (timeoutId) {
             clearTimeout(timeoutId)
           }
@@ -6571,7 +6571,7 @@
           $progress.hide()
           timeoutId = null
         }
-        editor.hideUploadProgress = function(time) {
+        editor.hideUploadProgress = function (time) {
           if (timeoutId) {
             clearTimeout(timeoutId)
           }
@@ -6581,8 +6581,8 @@
       })
     })
     // upload img 插件
-    _e(function(E, $) {
-      E.plugin(function() {
+    _e(function (E, $) {
+      E.plugin(function () {
         var editor = this
         var config = editor.config
         var uploadImgUrl = config.uploadImgUrl
@@ -6614,21 +6614,21 @@
         })
 
         // 选择本地文件，上传
-        $uploadIcon.click(function(e) {
+        $uploadIcon.click(function (e) {
           event = e
           upfile.selectFiles()
         })
       })
     })
     // h5 方式上传图片
-    _e(function(E, $) {
+    _e(function (E, $) {
       if (!window.FileReader || !window.FormData) {
         // 如果不支持html5的文档操作，直接返回
         return
       }
 
       // 构造函数
-      var UploadFile = function(opt) {
+      var UploadFile = function (opt) {
         this.editor = opt.editor
         this.uploadUrl = opt.uploadUrl
         this.timeout = opt.timeout
@@ -6639,13 +6639,13 @@
       UploadFile.fn = UploadFile.prototype
 
       // clear
-      UploadFile.fn.clear = function() {
+      UploadFile.fn.clear = function () {
         this.$input.val('')
         E.log('input value 已清空')
       }
 
       // 渲染
-      UploadFile.fn.render = function() {
+      UploadFile.fn.render = function () {
         var self = this
         if (self._hasRender) {
           // 不要重复渲染
@@ -6667,7 +6667,7 @@
         E.$body.append($container)
 
         // onchange 事件
-        $input.on('change', function(e) {
+        $input.on('change', function (e) {
           self.selected(e, $input.get(0))
         })
 
@@ -6679,7 +6679,7 @@
       }
 
       // 选择
-      UploadFile.fn.selectFiles = function() {
+      UploadFile.fn.selectFiles = function () {
         var self = this
 
         E.log('使用 html5 方式上传')
@@ -6693,7 +6693,7 @@
       }
 
       // 选中文件之后
-      UploadFile.fn.selected = function(e, input) {
+      UploadFile.fn.selected = function (e, input) {
         var self = this
         var files = input.files || []
         if (files.length === 0) {
@@ -6703,13 +6703,13 @@
         E.log('选中 ' + files.length + ' 个文件')
 
         // 遍历选中的文件，预览、上传
-        $.each(files, function(key, value) {
+        $.each(files, function (key, value) {
           self.upload(value)
         })
       }
 
       // 上传单个文件
-      UploadFile.fn.upload = function(file) {
+      UploadFile.fn.upload = function (file) {
         var self = this
         var editor = self.editor
         var filename = file.name || ''
@@ -6738,14 +6738,14 @@
           null,
           'insertHtml',
           '<img alt="' +
-            lang.uploadPlaceTxt +
-            filename +
-            '" src="' +
-            editor.config.uploadPlaceholderImg +
-            '"/>'
+          lang.uploadPlaceTxt +
+          filename +
+          '" src="' +
+          editor.config.uploadPlaceholderImg +
+          '"/>'
         )
         // onload事件
-        reader.onload = function(e) {
+        reader.onload = function (e) {
           E.log('已读取' + filename + '文件')
 
           var base64 = e.target.result || this.result
@@ -6755,13 +6755,13 @@
             base64: base64,
             fileType: fileType,
             name: uploadFileName,
-            loadfn: function(resultText, xhr, fileName) {
+            loadfn: function (resultText, xhr, fileName) {
               clearInput()
               // 执行配置中的方法
               var editor = this
               onload.call(editor, resultText, xhr, fileName)
             },
-            errorfn: function(xhr, fileName) {
+            errorfn: function (xhr, fileName) {
               clearInput()
               if (E.isOnWebsite) {
                 alert(
@@ -6772,7 +6772,7 @@
               var editor = this
               onerror.call(editor, xhr, fileName)
             },
-            timeoutfn: function(xhr, fileName) {
+            timeoutfn: function (xhr, fileName) {
               clearInput()
               if (E.isOnWebsite) {
                 alert(
@@ -6794,14 +6794,14 @@
       E.UploadFile = UploadFile
     })
     // form方式上传图片
-    _e(function(E, $) {
+    _e(function (E, $) {
       if (window.FileReader && window.FormData) {
         // 如果支持 html5 上传，则返回
         return
       }
 
       // 构造函数
-      var UploadFile = function(opt) {
+      var UploadFile = function (opt) {
         this.editor = opt.editor
         this.uploadUrl = opt.uploadUrl
         this.timeout = opt.timeout
@@ -6812,18 +6812,18 @@
       UploadFile.fn = UploadFile.prototype
 
       // clear
-      UploadFile.fn.clear = function() {
+      UploadFile.fn.clear = function () {
         this.$input.val('')
         E.log('input value 已清空')
       }
 
       // 隐藏modal
-      UploadFile.fn.hideModal = function() {
+      UploadFile.fn.hideModal = function () {
         this.modal.hide()
       }
 
       // 渲染
-      UploadFile.fn.render = function() {
+      UploadFile.fn.render = function () {
         var self = this
         var editor = self.editor
         var uploadFileName =
@@ -6842,28 +6842,28 @@
         var iframeId = 'iframe' + E.random()
         var $iframe = $(
           '<iframe name="' +
-            iframeId +
-            '" id="' +
-            iframeId +
-            '" frameborder="0" width="0" height="0"></iframe>'
+          iframeId +
+          '" id="' +
+          iframeId +
+          '" frameborder="0" width="0" height="0"></iframe>'
         )
         var multiple = self.multiple
         var multipleTpl = multiple ? 'multiple="multiple"' : ''
         var $p = $('<p>选择图片并上传</p>')
         var $input = $(
           '<input type="file" ' +
-            multipleTpl +
-            ' name="' +
-            uploadFileName +
-            '"/>'
+          multipleTpl +
+          ' name="' +
+          uploadFileName +
+          '"/>'
         )
         var $btn = $('<input type="submit" value="上传"/>')
         var $form = $(
           '<form enctype="multipart/form-data" method="post" action="' +
-            uploadUrl +
-            '" target="' +
-            iframeId +
-            '"></form>'
+          uploadUrl +
+          '" target="' +
+          iframeId +
+          '"></form>'
         )
         var $container = $('<div style="margin:10px 20px;"></div>')
 
@@ -6873,7 +6873,7 @@
           .append($btn)
 
         // 增加用户配置的参数，如 token
-        $.each(editor.config.uploadParams, function(key, value) {
+        $.each(editor.config.uploadParams, function (key, value) {
           $form.append(
             $('<input type="hidden" name="' + key + '" value="' + value + '"/>')
           )
@@ -6896,7 +6896,7 @@
       }
 
       // 绑定 iframe load 事件
-      UploadFile.fn.bindLoadEvent = function() {
+      UploadFile.fn.bindLoadEvent = function () {
         var self = this
         if (self._hasBindLoad) {
           // 不要重复绑定
@@ -6954,7 +6954,7 @@
         self._hasBindLoad = true
       }
 
-      UploadFile.fn.show = function() {
+      UploadFile.fn.show = function () {
         var self = this
         var modal = self.modal
 
@@ -6966,7 +6966,7 @@
       }
 
       // 选择
-      UploadFile.fn.selectFiles = function() {
+      UploadFile.fn.selectFiles = function () {
         var self = this
 
         E.log('使用 form 方式上传')
@@ -6985,8 +6985,8 @@
       E.UploadFile = UploadFile
     })
     // upload img 插件 粘贴图片
-    _e(function(E, $) {
-      E.plugin(function() {
+    _e(function (E, $) {
+      E.plugin(function () {
         var editor = this
         var txt = editor.txt
         var $txt = txt.$txt
@@ -7008,11 +7008,11 @@
 
           E.log(
             '粘贴后，检查到编辑器有' +
-              $imgs.length +
-              '个图片。开始遍历图片，试图找到刚刚粘贴过来的图片'
+            $imgs.length +
+            '个图片。开始遍历图片，试图找到刚刚粘贴过来的图片'
           )
 
-          $.each($imgs, function() {
+          $.each($imgs, function () {
             var img = this
             var $img = $(img)
             var flag
@@ -7020,7 +7020,7 @@
             var type
 
             // 判断当前图片是否是粘贴之前的
-            $imgsBeforePaste.each(function() {
+            $imgsBeforePaste.each(function () {
               if (img === this) {
                 // 当前图片是粘贴之前的
                 flag = true
@@ -7057,7 +7057,7 @@
         }
 
         // 开始监控粘贴事件
-        $txt.on('paste', function(e) {
+        $txt.on('paste', function (e) {
           pasteEvent = e
           var data =
             pasteEvent.clipboardData || pasteEvent.originalEvent.clipboardData
@@ -7079,7 +7079,7 @@
             // -------- chrome 可以用 data.items 取出图片 -----
             E.log('通过 data.items 得到了数据')
             console.log(items)
-            $.each(items, function(key, value) {
+            $.each(items, function (key, value) {
               var fileType = value.type || ''
               if (fileType.indexOf('image') < 0) {
                 // 不是图片
@@ -7090,7 +7090,7 @@
               var reader = new FileReader()
 
               E.log('得到一个粘贴图片')
-              reader.onload = function(e) {
+              reader.onload = function (e) {
                 E.log('读取到粘贴的图片')
 
                 // 执行上传
@@ -7122,8 +7122,8 @@
       })
     })
     // 拖拽上传图片 插件
-    _e(function(E, $) {
-      E.plugin(function() {
+    _e(function (E, $) {
+      E.plugin(function () {
         var editor = this
         var txt = editor.txt
         var $txt = txt.$txt
@@ -7138,12 +7138,12 @@
         }
 
         // 阻止浏览器默认行为
-        E.$document.on('dragleave drop dragenter dragover', function(e) {
+        E.$document.on('dragleave drop dragenter dragover', function (e) {
           e.preventDefault()
         })
 
         // 监控 $txt drop 事件
-        $txt.on('drop', function(dragEvent) {
+        $txt.on('drop', function (dragEvent) {
           dragEvent.preventDefault()
 
           var originalEvent = dragEvent.originalEvent
@@ -7154,7 +7154,7 @@
             return
           }
 
-          $.each(files, function(k, file) {
+          $.each(files, function (k, file) {
             var type = file.type
             var name = file.name
 
@@ -7169,14 +7169,14 @@
               null,
               'insertHtml',
               '<img alt="' +
-                lang.uploadPlaceTxt +
-                name +
-                '"  src="' +
-                editor.config.uploadPlaceholderImg +
-                '" />'
+              lang.uploadPlaceTxt +
+              name +
+              '"  src="' +
+              editor.config.uploadPlaceholderImg +
+              '" />'
             )
             var reader = new FileReader()
-            reader.onload = function(e) {
+            reader.onload = function (e) {
               E.log('读取到图片 ' + name)
 
               // 执行上传
@@ -7197,8 +7197,8 @@
       })
     })
     // 编辑器区域 table toolbar
-    _e(function(E, $) {
-      E.plugin(function() {
+    _e(function (E, $) {
+      E.plugin(function () {
         var editor = this
         var txt = editor.txt
         var $txt = txt.$txt
@@ -7248,7 +7248,7 @@
             // 执行命令之前，先存储html内容
             html = $txt.html()
             // 监控内容变化
-            var cb = function() {
+            var cb = function () {
               if (callback) {
                 callback()
               }
@@ -7263,35 +7263,35 @@
           }
 
           // 删除
-          $delete.click(function(e) {
-            commandFn = function() {
+          $delete.click(function (e) {
+            commandFn = function () {
               $currentTable.remove()
             }
-            command(e, function() {
+            command(e, function () {
               setTimeout(hide, 100)
             })
           })
 
           // 放大
-          $zoomBig.click(function(e) {
-            commandFn = function() {
+          $zoomBig.click(function (e) {
+            commandFn = function () {
               $currentTable.css({
                 width: '100%'
               })
             }
-            command(e, function() {
+            command(e, function () {
               setTimeout(show)
             })
           })
 
           // 缩小
-          $zoomSmall.click(function(e) {
-            commandFn = function() {
+          $zoomSmall.click(function (e) {
+            commandFn = function () {
               $currentTable.css({
                 width: 'auto'
               })
             }
-            command(e, function() {
+            command(e, function () {
               setTimeout(show)
             })
           })
@@ -7362,7 +7362,7 @@
 
         // click table 事件
         $currentTxt
-          .on('click', 'table', function(e) {
+          .on('click', 'table', function (e) {
             var $table = $(e.currentTarget)
 
             // 渲染
@@ -7381,21 +7381,21 @@
             e.preventDefault()
             e.stopPropagation()
           })
-          .on('click keydown scroll', function(e) {
+          .on('click keydown scroll', function (e) {
             setTimeout(hide, 100)
           })
-        E.$body.on('click keydown scroll', function(e) {
+        E.$body.on('click keydown scroll', function (e) {
           setTimeout(hide, 100)
         })
       })
     })
     // 编辑器区域 img toolbar
-    _e(function(E, $) {
+    _e(function (E, $) {
       if (E.userAgent.indexOf('MSIE 8') > 0) {
         return
       }
 
-      E.plugin(function() {
+      E.plugin(function () {
         var editor = this
         var lang = editor.config.lang
         var txt = editor.txt
@@ -7446,6 +7446,9 @@
         var $addGoods = $(
           '<a href="#" onclick="linkGoods(event)"><i class="wangeditor-menu-img-credit-card"></i></a>'
         )
+        var $removeGoods = $(
+          '<a href="#"><i class="wangeditor-menu-img-address-book"></i></a>'
+        )
 
         var $linkInputContainer = $('<div style="display:none;"></div>')
         var $linkInput = $(
@@ -7467,7 +7470,7 @@
             return
           }
           var commandFn
-          var callback = function() {
+          var callback = function () {
             // 及时保存currentLink
             if (url != null) {
               currentLink = url
@@ -7494,7 +7497,7 @@
           } else if (url === '') {
             // url 是空字符串，是取消链接
             if (inLink) {
-              commandFn = function() {
+              commandFn = function () {
                 $currentImg.unwrap()
               }
             }
@@ -7503,7 +7506,7 @@
             if (url === currentLink) {
               return
             }
-            commandFn = function() {
+            commandFn = function () {
               $link.attr('href', url)
 
               if (!inLink) {
@@ -7546,6 +7549,7 @@
             .append($link)
             .append($unLink)
             .append($addGoods)
+            .append($removeGoods)
 
           // 链接input放入container
           $linkInputContainer
@@ -7571,7 +7575,7 @@
             var cb
             // 记录下执行命令之前的html内容
             html = $txt.html()
-            cb = function() {
+            cb = function () {
               if (callback) {
                 callback()
               }
@@ -7586,22 +7590,22 @@
           }
 
           // 删除
-          $delete.click(function(e) {
+          $delete.click(function (e) {
             // 删除之前先unlink
             imgLink(e, '')
 
             // 删除图片
-            commandFn = function() {
+            commandFn = function () {
               $currentImg.remove()
             }
-            customCommand(e, function() {
+            customCommand(e, function () {
               setTimeout(hide, 100)
             })
           })
 
           // 放大
-          $zoomBig.click(function(e) {
-            commandFn = function() {
+          $zoomBig.click(function (e) {
+            commandFn = function () {
               var img = $currentImg.get(0)
               var width = img.width
               var height = img.height
@@ -7613,14 +7617,14 @@
                 height: height + 'px'
               })
             }
-            customCommand(e, function() {
+            customCommand(e, function () {
               setTimeout(show)
             })
           })
 
           // 缩小
-          $zoomSmall.click(function(e) {
-            commandFn = function() {
+          $zoomSmall.click(function (e) {
+            commandFn = function () {
               var img = $currentImg.get(0)
               var width = img.width
               var height = img.height
@@ -7632,7 +7636,7 @@
                 height: height + 'px'
               })
             }
-            customCommand(e, function() {
+            customCommand(e, function () {
               setTimeout(show)
             })
           })
@@ -7650,8 +7654,8 @@
           // });
 
           // alignLeft
-          $alignLeft.click(function(e) {
-            commandFn = function() {
+          $alignLeft.click(function (e) {
+            commandFn = function () {
               // 如果 img 增加了链接，那么 img.parent() 就是 a 标签，设置 align 没用的，因此必须找到 P 父节点来设置 align
               $currentImg
                 .parents('p')
@@ -7660,7 +7664,7 @@
                 })
                 .attr('align', 'left')
             }
-            customCommand(e, function() {
+            customCommand(e, function () {
               setTimeout(hide, 100)
             })
           })
@@ -7678,8 +7682,8 @@
           // });
 
           // alignRight
-          $alignRight.click(function(e) {
-            commandFn = function() {
+          $alignRight.click(function (e) {
+            commandFn = function () {
               // 如果 img 增加了链接，那么 img.parent() 就是 a 标签，设置 align 没用的，因此必须找到 P 父节点来设置 align
               $currentImg
                 .parents('p')
@@ -7688,7 +7692,7 @@
                 })
                 .attr('align', 'right')
             }
-            customCommand(e, function() {
+            customCommand(e, function () {
               setTimeout(hide, 100)
             })
           })
@@ -7706,8 +7710,8 @@
           // });
 
           // alignCenter
-          $alignCenter.click(function(e) {
-            commandFn = function() {
+          $alignCenter.click(function (e) {
+            commandFn = function () {
               // 如果 img 增加了链接，那么 img.parent() 就是 a 标签，设置 align 没用的，因此必须找到 P 父节点来设置 align
               $currentImg
                 .parents('p')
@@ -7716,14 +7720,14 @@
                 })
                 .attr('align', 'center')
             }
-            customCommand(e, function() {
+            customCommand(e, function () {
               setTimeout(hide, 100)
             })
           })
 
           // link
           // 显示链接input
-          $link.click(function(e) {
+          $link.click(function (e) {
             e.preventDefault()
 
             // 获取当前链接，并显示
@@ -7734,7 +7738,7 @@
             $linkInputContainer.show()
           })
           // 设置链接
-          $linkBtnSubmit.click(function(e) {
+          $linkBtnSubmit.click(function (e) {
             e.preventDefault()
 
             var url = $.trim($linkInput.val())
@@ -7747,7 +7751,7 @@
             setTimeout(hide)
           })
           // 取消设置链接
-          $linkBtnCancel.click(function(e) {
+          $linkBtnCancel.click(function (e) {
             e.preventDefault()
 
             // 重置链接 input
@@ -7758,7 +7762,7 @@
           })
 
           // unlink
-          $unLink.click(function(e) {
+          $unLink.click(function (e) {
             e.preventDefault()
 
             // 执行 unlink
@@ -7766,6 +7770,12 @@
 
             // 隐藏 toolbar
             setTimeout(hide)
+          })
+
+          //二次开发
+          //取消链接商品
+          $removeGoods.click(function (e) {
+            $currentImg.removeAttr("data-goodsId");
           })
         }
 
@@ -7800,7 +7810,7 @@
               })
           }
 
-          $dragPoint.on('mousedown', function(e) {
+          $dragPoint.on('mousedown', function (e) {
             if (!$currentImg) {
               return
             }
@@ -7821,7 +7831,7 @@
 
             // 绑定计算事件
             E.$document.on('mousemove._dragResizeImg', mousemove)
-            E.$document.on('mouseup._dragResizeImg', function(e) {
+            E.$document.on('mouseup._dragResizeImg', function (e) {
               // 取消绑定
               E.$document.off('mousemove._dragResizeImg')
               E.$document.off('mouseup._dragResizeImg')
@@ -7928,7 +7938,7 @@
           if (!editor.emotionUrls) {
             return result
           }
-          $.each(editor.emotionUrls, function(index, url) {
+          $.each(editor.emotionUrls, function (index, url) {
             var flag = false
             if (imgSrc === url) {
               result = true
@@ -7943,10 +7953,10 @@
 
         // click img 事件
         $currentTxt
-          .on('mousedown', 'img', function(e) {
+          .on('mousedown', 'img', function (e) {
             e.preventDefault()
           })
-          .on('click', 'img', function(e) {
+          .on('click', 'img', function (e) {
             var $img = $(e.currentTarget)
             var src = $img.attr('src')
 
@@ -7977,7 +7987,7 @@
             e.preventDefault()
             e.stopPropagation()
           })
-          .on('click keydown scroll', function(e) {
+          .on('click keydown scroll', function (e) {
             if (!isOnDrag) {
               setTimeout(hide, 100)
             }
@@ -7985,8 +7995,8 @@
       })
     })
     // 编辑区域 link toolbar
-    _e(function(E, $) {
-      E.plugin(function() {
+    _e(function (E, $) {
+      E.plugin(function () {
         var editor = this
         var lang = editor.config.lang
         var $txt = editor.txt.$txt
@@ -7998,8 +8008,8 @@
         var $triangle = $('<div class="tip-triangle"></div>')
         var $triggerLink = $(
           '<a href="#" target="_blank"><i class="wangeditor-menu-img-link"></i> ' +
-            lang.openLink +
-            '</a>'
+          lang.openLink +
+          '</a>'
         )
         var isRendered
 
@@ -8090,12 +8100,12 @@
 
         // $txt 绑定事件
         $txt
-          .on('mouseenter', 'a', function(e) {
+          .on('mouseenter', 'a', function (e) {
             // 延时 500ms 显示toolbar
             if (showTimeoutId) {
               clearTimeout(showTimeoutId)
             }
-            showTimeoutId = setTimeout(function() {
+            showTimeoutId = setTimeout(function () {
               var a = e.currentTarget
               var $a = $(a)
               $currentLink = $a
@@ -8105,7 +8115,7 @@
                 // 该链接下包含一个图片
 
                 // 图片点击时，隐藏toolbar
-                $img.click(function(e) {
+                $img.click(function (e) {
                   hide()
                 })
 
@@ -8119,25 +8129,25 @@
               show()
             }, 500)
           })
-          .on('mouseleave', 'a', function(e) {
+          .on('mouseleave', 'a', function (e) {
             // 延时 500ms 隐藏toolbar
             if (hideTimeoutId) {
               clearTimeout(hideTimeoutId)
             }
             hideTimeoutId = setTimeout(hide, 500)
           })
-          .on('click keydown scroll', function(e) {
+          .on('click keydown scroll', function (e) {
             setTimeout(hide, 100)
           })
         // $toolbar 绑定事件
         $toolbar
-          .on('mouseenter', function(e) {
+          .on('mouseenter', function (e) {
             // 先中断掉 $txt.mouseleave 导致的隐藏
             if (hideTimeoutId) {
               clearTimeout(hideTimeoutId)
             }
           })
-          .on('mouseleave', function(e) {
+          .on('mouseleave', function (e) {
             // 延时 500ms 显示toolbar
             if (showTimeoutIdByToolbar) {
               clearTimeout(showTimeoutIdByToolbar)
@@ -8147,8 +8157,8 @@
       })
     })
     // menu吸顶
-    _e(function(E, $) {
-      E.plugin(function() {
+    _e(function (E, $) {
+      E.plugin(function () {
         var editor = this
         var menuFixed = editor.config.menuFixed
         if (menuFixed === false || typeof menuFixed !== 'number') {
@@ -8172,7 +8182,7 @@
 
         var $txt = editor.txt.$txt
 
-        E.$window.scroll(function() {
+        E.$window.scroll(function () {
           //全屏模式不支持
           if (editor.isFullScreen) {
             return
@@ -8237,9 +8247,9 @@
       })
     })
     // 缩进 菜单插件
-    _e(function(E, $) {
+    _e(function (E, $) {
       // 用 createMenu 方法创建菜单
-      E.createMenu(function(check) {
+      E.createMenu(function (check) {
         // 定义菜单id，不要和其他菜单id重复。编辑器自带的所有菜单id，可通过『参数配置-自定义菜单』一节查看
         var menuId = 'indent'
 
@@ -8267,7 +8277,7 @@
         })
 
         // 菜单正常状态下，点击将触发该事件
-        menu.clickEvent = function(e) {
+        menu.clickEvent = function (e) {
           var elem = editor.getRangeElem()
           var p = editor.getSelfOrParentByName(elem, 'p')
           var $p
@@ -8286,7 +8296,7 @@
         }
 
         // 菜单选中状态下，点击将触发该事件
-        menu.clickEventSelected = function(e) {
+        menu.clickEventSelected = function (e) {
           var elem = editor.getRangeElem()
           var p = editor.getSelfOrParentByName(elem, 'p')
           var $p
@@ -8305,7 +8315,7 @@
         }
 
         // 根据当前选区，自定义更新菜单的选中状态或者正常状态
-        menu.updateSelectedEvent = function() {
+        menu.updateSelectedEvent = function () {
           // 获取当前选区所在的父元素
           var elem = editor.getRangeElem()
           var p = editor.getSelfOrParentByName(elem, 'p')
@@ -8333,9 +8343,9 @@
       })
     })
     // 行高 菜单插件
-    _e(function(E, $) {
+    _e(function (E, $) {
       // 用 createMenu 方法创建菜单
-      E.createMenu(function(check) {
+      E.createMenu(function (check) {
         // 定义菜单id，不要和其他菜单id重复。编辑器自带的所有菜单id，可通过『参数配置-自定义菜单』一节查看
         var menuId = 'lineheight'
 
@@ -8348,7 +8358,7 @@
         var editor = this
 
         // 由于浏览器自身不支持 lineHeight 命令，因此要做一个hook
-        editor.commandHooks.lineHeight = function(value) {
+        editor.commandHooks.lineHeight = function (value) {
           var rangeElem = editor.getRangeElem()
           var targetElem = editor.getSelfOrParentByName(
             rangeElem,
@@ -8399,8 +8409,8 @@
       })
     })
     // 自定义上传
-    _e(function(E, $) {
-      E.plugin(function() {
+    _e(function (E, $) {
+      E.plugin(function () {
         var editor = this
         var customUpload = editor.config.customUpload
         if (!customUpload) {
@@ -8435,7 +8445,7 @@
       })
     })
     // 版权提示
-    _e(function(E, $) {
+    _e(function (E, $) {
       E.info(
         '本页面富文本编辑器由 wangEditor 提供 http://wangeditor.github.io/ '
       )
