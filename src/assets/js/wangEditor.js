@@ -7869,7 +7869,9 @@
             return
           }
           $currentImg.addClass('clicked');
-          console.log($currentImg.dataset.goodsid)
+          if ($currentImg.attr("goodsid") != undefined) {
+            $removeGoods.css("display", "none");
+          }
           var imgPosition = $currentImg.position()
           var imgTop = imgPosition.top
           var imgLeft = imgPosition.left
