@@ -7869,7 +7869,7 @@
             return
           }
           $currentImg.addClass('clicked');
-          if (!$currentImg.attr("goodsid")) {
+          if (!$currentImg.attr("data-goodsid")) {
             $removeGoods.css("display", "none");
           }
           var imgPosition = $currentImg.position()
