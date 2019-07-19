@@ -7868,7 +7868,8 @@
           if ($currentImg == null) {
             return
           }
-          $currentImg.addClass('clicked')
+          $currentImg.addClass('clicked');
+          console.log($currentImg.dataset.goodsid)
           var imgPosition = $currentImg.position()
           var imgTop = imgPosition.top
           var imgLeft = imgPosition.left
